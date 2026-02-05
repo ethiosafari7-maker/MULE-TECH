@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MULE TECH | Premium</title>
+    <title>MULE TECH | Secure Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .hidden { display: none; }
@@ -12,8 +12,8 @@
         .pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: #EF4444; clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 20; }
         .input-error { border: 2px solid #EF4444 !important; background-color: #FEF2F2; }
         .valid-icon { color: #10B981; font-weight: bold; position: absolute; right: 15px; display: none; }
-        .gold-header { color: #FFD700; font-weight: 900; font-size: 2.8rem; text-transform: uppercase; margin-bottom: 5px; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); }
-        select { background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 4px 8px; font-size: 12px; outline: none; }
+        .gold-header { color: #FFD700; font-weight: 900; font-size: 2.8rem; text-transform: uppercase; margin-bottom: 5px; }
+        .warning-text { color: #DC2626; font-size: 11px; font-weight: bold; background: #FEE2E2; padding: 5px; border-radius: 5px; margin-bottom: 10px; }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
@@ -23,8 +23,7 @@
         <div class="text-center mb-6">
             <h1 class="gold-header">MULE TECH</h1>
             <div class="flex justify-center items-center gap-2 mt-2">
-                <span class="text-xs text-slate-500">Language:</span>
-                <select onchange="changeLang(this.value)" class="cursor-pointer font-bold text-blue-800">
+                <select onchange="changeLang(this.value)" class="cursor-pointer font-bold text-blue-800 border rounded p-1 text-xs">
                     <option value="am">አማርኛ</option>
                     <option value="en">English</option>
                     <option value="or">Afaan Oromoo</option>
@@ -49,26 +48,26 @@
         </div>
 
         <div id="page2" class="hidden text-center">
-            <button onclick="nav(2, 1)" class="float-left text-blue-700 text-sm font-bold">⬅️ Back</button>
-            <h2 id="wheel-title" class="text-lg font-bold text-blue-800 clear-both">🎡 እድልዎን ይሞክሩ</h2>
+            <button onclick="nav(2, 1)" class="float-left text-blue-700 text-sm font-bold flex items-center gap-1">⬅️ Back</button>
+            <h2 id="wheel-title" class="text-lg font-bold text-blue-800 clear-both mb-2">🎡 እድልዎን ይሞክሩ</h2>
+            <p class="warning-text">⚠️ ማሳሰቢያ፡ በአንድ ስልክ አንድ ጊዜ ብቻ መሞከር ይቻላል! በድጋሜ ለመሞከር መሞከር ከውድድር ውጭ ያደርጋል።</p>
+            
             <div id="wheel-container"><div class="pointer"></div><canvas id="wheel"></canvas></div>
+            
             <button id="spin-btn" onclick="spinNow()" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold shadow-xl">አሽከርክር (SPIN) 🌀</button>
+            <button onclick="nav(2, 1)" id="back-to-info" class="w-full mt-3 text-slate-400 font-bold text-xs underline">መረጃ ማስተካከል (Update Info)</button>
         </div>
 
         <div id="page3" class="hidden text-center">
-            <button onclick="nav(3, 2)" class="float-left text-blue-700 text-sm font-bold">⬅️ Back</button>
-            <h2 id="res-head" class="text-xl font-black text-blue-900 clear-both mb-4"></h2>
-            
+            <h2 id="res-head" class="text-xl font-black text-blue-900 mb-4"></h2>
             <div id="win-display" class="hidden bg-green-50 p-6 rounded-2xl border-2 border-dashed border-green-400 mb-4">
-                <p class="text-green-700 font-bold text-sm">ያሸነፉት መለያ ቁጥር (Order ID):</p>
+                <p class="text-green-700 font-bold text-sm">Order ID:</p>
                 <h3 id="order-id" class="text-4xl font-mono font-black text-green-800"></h3>
-                <button onclick="sendFinalReport('Won Free Course')" class="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-bold">መረጃውን ላክ (Submit)</button>
+                <button onclick="sendFinalReport('Won Free Course')" class="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-bold w-full">መረጃውን ላክ (Submit)</button>
             </div>
-
             <div id="course-selection" class="hidden">
-                <p id="sel-text" class="text-sm font-bold text-slate-600 mb-3">የሚፈልጉትን ኮርስ ይምረጡ፡</p>
-                <select id="course-dropdown" onchange="showCourseDetails(this.value)" class="w-full p-3 border-2 border-blue-400 rounded-xl font-bold bg-blue-50 mb-4">
-                    <option value="">-- Select Course --</option>
+                <select id="course-dropdown" onchange="showCourseDetails(this.value)" class="w-full p-3 border-2 border-blue-400 rounded-xl font-bold bg-blue-50 mb-4 text-center">
+                    <option value="">-- ኮርስ ይምረጡ --</option>
                     <option value="Video Editing">Video Editing</option>
                     <option value="Graphics Design">Graphics Design</option>
                     <option value="Free Internet">Free Internet Config</option>
@@ -76,19 +75,17 @@
                 </select>
                 <div id="course-info" class="hidden bg-slate-50 p-4 rounded-xl text-left border mb-4">
                     <p id="c-desc" class="text-xs text-slate-600 mb-2"></p>
-                    <p class="font-bold text-blue-700">ዋጋ፡ <span id="c-price"></span> ETB</p>
-                    <p class="text-[10px] text-orange-600 font-bold mt-1">ክፍያውን ሲጨርሱ Order ID ይሰጥዎታል።</p>
+                    <p class="font-bold text-blue-700 text-sm">ዋጋ፡ <span id="c-price"></span> ETB</p>
                 </div>
-                <button id="to-pay-btn" onclick="generatePaidID()" class="hidden w-full bg-orange-500 text-white py-3 rounded-xl font-bold">ወደ ክፍያ ሂድ (Payment) 💳</button>
+                <button id="to-pay-btn" onclick="generatePaidID()" class="hidden w-full bg-orange-500 text-white py-3 rounded-xl font-bold shadow-lg">ወደ ክፍያ ሂድ (Payment) 💳</button>
             </div>
         </div>
 
         <div id="page4" class="hidden">
-            <button onclick="nav(4, 3)" class="text-blue-700 text-sm font-bold mb-4">⬅️ Back</button>
-            <h2 class="text-xl font-black text-blue-900 mb-2">💳 የክፍያ መፈፀሚያ</h2>
+            <h2 class="text-xl font-black text-blue-900 mb-2 text-center">💳 የክፍያ መፈፀሚያ</h2>
             <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100 mb-4">
-                <p class="text-[10px] text-blue-600 font-bold mb-2 uppercase">Your Purchase Order ID:</p>
-                <h4 id="paid-order-id" class="text-2xl font-mono font-black text-blue-800 mb-3"></h4>
+                <p class="text-[10px] text-blue-600 font-bold mb-1 uppercase">Order ID:</p>
+                <h4 id="paid-order-id" class="text-2xl font-mono font-black text-blue-800 mb-3 text-center"></h4>
                 <div class="space-y-2 text-xs font-bold border-t pt-2">
                     <div class="flex justify-between"><span>Telebirr:</span> <span>0927275152</span></div>
                     <div class="flex justify-between"><span>CBE:</span> <span>1000745084773</span></div>
@@ -99,15 +96,19 @@
     </div>
 
     <script>
+        // --- Security Check: Device Lock ---
+        const deviceID = "MULE_USER_" + btoa(navigator.userAgent).substring(0, 16);
+        if (localStorage.getItem('mule_tech_played') === 'true') {
+            document.body.innerHTML = `<div class='text-center p-10 font-bold text-red-600'>⚠️ ይቅርታ! በዚህ ስልክ አንድ ጊዜ ሞክረዋል። በድጋሚ መሞከር አይቻልም። <br><br> <button onclick="location.reload()" class="text-blue-600 underline">Refresh</button></div>`;
+        }
+
         const langData = {
             am: { reg: "👤 የግል መረጃዎን ያስገቡ", wheel: "🎡 እድልዎን ይሞክሩ", next: "ቀጥል (NEXT) ➡️", rule: "በ MULE TECH ህጎች እና ደንቦች ተስማምቻለሁ።" },
-            en: { reg: "👤 Enter Personal Info", wheel: "🎡 Spin Your Luck", next: "NEXT ➡️", rule: "I agree to MULE TECH Rules." },
-            or: { reg: "👤 Odeeffannoo Galchaa", wheel: "🎡 Carraa Yaalaa", next: "NEXT ➡️", rule: "Seera MULE TECH walii galeera." },
-            tg: { reg: "👤 ሓበሬታኹም የእትዉ", wheel: "🎡 ዕድልኩም ፈትኑ", next: "NEXT ➡️", rule: "ብሕግታት MULE TECH ተሰማሚዐ ኣለኹ።" }
+            en: { reg: "👤 Enter Your Info", wheel: "🎡 Spin Your Luck", next: "NEXT ➡️", rule: "I agree to MULE TECH Rules." }
         };
 
         function changeLang(l) {
-            const d = langData[l];
+            const d = langData[l] || langData.am;
             document.getElementById('reg-title').innerText = d.reg;
             document.getElementById('wheel-title').innerText = d.wheel;
             document.getElementById('next-btn').innerText = d.next;
@@ -128,7 +129,7 @@
                 const fields = ['fname','mname','lname','email','phone'];
                 let ok = true;
                 fields.forEach(id => { if(document.getElementById(id).parentElement.querySelector('.valid-icon').style.display !== 'block') { document.getElementById(id).classList.add('input-error'); ok = false; }});
-                if(!document.getElementById('rule-check').checked) { alert("Agree to rules!"); ok = false; }
+                if(!document.getElementById('rule-check').checked) { alert("Please agree to rules!"); ok = false; }
                 if(!ok) return;
             }
             document.getElementById('page'+from).classList.add('hidden');
@@ -154,9 +155,14 @@
         let globalOrderID = "";
 
         function spinNow() {
+            // Lock device immediately
+            localStorage.setItem('mule_tech_played', 'true');
             document.getElementById('spin-btn').disabled = true;
+            document.getElementById('back-to-info').classList.add('hidden');
+            
             rot += Math.floor(3000 + Math.random()*3000);
             canvas.style.transform = `rotate(${rot}deg)`;
+            
             setTimeout(() => {
                 const idx = items.length - 1 - Math.floor((rot % 360) / (360 / items.length));
                 globalSpinResult = items[idx];
@@ -167,26 +173,22 @@
         function handleResult(res) {
             nav(2, 3);
             document.getElementById('res-head').innerText = res;
-            const isMain = ["Video Editing", "Graphics Design", "Free Internet", "Social Management"].includes(res);
-            if(isMain) {
+            if(["Video Editing", "Graphics Design", "Free Internet", "Social Management"].includes(res)) {
                 globalOrderID = "MULE" + Math.floor(100+Math.random()*899);
                 document.getElementById('win-display').classList.remove('hidden');
-                document.getElementById('course-selection').classList.add('hidden');
                 document.getElementById('order-id').innerText = globalOrderID;
             } else {
-                document.getElementById('win-display').classList.add('hidden');
                 document.getElementById('course-selection').classList.remove('hidden');
             }
         }
 
         function showCourseDetails(v) {
-            const info = document.getElementById('course-info');
-            const btn = document.getElementById('to-pay-btn');
+            const info = document.getElementById('course-info'), btn = document.getElementById('to-pay-btn');
             if(v) {
                 info.classList.remove('hidden'); btn.classList.remove('hidden');
-                const prices = {"Video Editing": 400, "Graphics Design": 400, "Free Internet": 400, "Social Management": 500};
-                document.getElementById('c-desc').innerText = "Premium Course: " + v;
-                document.getElementById('c-price').innerText = prices[v];
+                const p = {"Video Editing":400, "Graphics Design":400, "Free Internet":400, "Social Management":500};
+                document.getElementById('c-desc').innerText = "Premium: " + v;
+                document.getElementById('c-price').innerText = p[v];
             } else { info.classList.add('hidden'); btn.classList.add('hidden'); }
         }
 
@@ -197,12 +199,11 @@
         }
 
         async function sendFinalReport(status) {
-            const selectedCourse = document.getElementById('course-dropdown').value;
             const fullName = `${document.getElementById('fname').value} ${document.getElementById('mname').value} ${document.getElementById('lname').value}`;
-            const report = `🚀 NEW MULE TECH ORDER\n\n👤 Name: ${fullName}\n📞 Phone: ${document.getElementById('phone').value}\n🎡 Spin: ${globalSpinResult}\n🆔 Order ID: ${globalOrderID}\n📚 Course: ${selectedCourse || "Free Winner"}\n💳 Status: ${status}`;
-
+            const report = `🚀 MULE TECH SECURE ORDER\n\n👤 Name: ${fullName}\n📧 Email: ${document.getElementById('email').value}\n📞 Phone: ${document.getElementById('phone').value}\n🎡 Spin: ${globalSpinResult}\n🆔 ID: ${globalOrderID}\n📱 Device: ${deviceID}\n💳 Status: ${status}`;
+            
             await fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(report)}`);
-            alert("Order Completed! Your ID is: " + globalOrderID);
+            alert("Order Submitted! ID: " + globalOrderID);
             location.reload();
         }
     </script>
