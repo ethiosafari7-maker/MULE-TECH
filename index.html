@@ -3,200 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MULE TECH | Professional Solution</title>
+    <title>MULE TECH | Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .hidden { display: none; }
-        #wheel-container { position: relative; width: 320px; height: 320px; margin: 15px auto; }
-        #wheel { width: 100%; height: 100%; border-radius: 50%; border: 10px solid #1E40AF; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); }
-        .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 35px; height: 35px; background: #EF4444; clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 20; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+        #wheel-container { position: relative; width: 300px; height: 300px; margin: 15px auto; }
+        #wheel { width: 100%; height: 100%; border-radius: 50%; border: 8px solid #1E40AF; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); }
+        .pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: #EF4444; clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 20; }
         .input-error { border: 2px solid #EF4444 !important; background-color: #FEF2F2; }
-        .valid-icon { color: #10B981; font-weight: bold; font-size: 1.2rem; display: none; position: absolute; right: 15px; }
-        select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%231E40AF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 1.2em; }
+        .valid-icon { color: #10B981; font-weight: bold; position: absolute; right: 15px; display: none; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
 
-    <div class="max-w-md w-full bg-white rounded-[2.5rem] shadow-2xl p-8 border-t-[10px] border-blue-700">
-        <div class="text-center mb-6">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231E40AF'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='white' font-size='30' font-family='Arial' dy='.3em'%3EMULE%3C/text%3E%3C/svg%3E" alt="Mule Tech Logo" class="w-24 h-24 mx-auto rounded-full shadow-lg border-4 border-white mb-2">
-            <h1 class="text-3xl font-black text-blue-900 italic tracking-tight">MULE TECH</h1>
-            
-            <div class="mt-4">
-                <select onchange="changeLang(this.value)" class="w-full p-2.5 border-2 border-blue-200 rounded-2xl outline-none appearance-none font-bold text-blue-800 bg-blue-50 text-sm">
-                    <option value="am">አማርኛ (Amharic)</option>
-                    <option value="en">English</option>
-                    <option value="or">Afaan Oromoo</option>
-                    <option value="tg">ትግርኛ (Tigrinya)</option>
-                </select>
-            </div>
+    <div class="max-w-md w-full bg-white rounded-[2rem] shadow-2xl p-6 border-t-[8px] border-blue-700">
+        
+        <div class="text-center mb-4">
+            <div class="w-20 h-20 bg-blue-700 rounded-full mx-auto flex items-center justify-center text-white font-black text-xl shadow-lg border-4 border-white mb-2">MULE</div>
+            <h1 class="text-2xl font-black text-blue-900 italic">MULE TECH</h1>
         </div>
 
         <div id="page1">
-            <h2 id="reg-title" class="text-lg font-bold text-slate-700 mb-5 flex items-center gap-2">👤 የግል መረጃዎን ያስገቡ</h2>
-            <div class="space-y-4">
-                <div class="relative flex items-center"><input type="text" id="fname" placeholder="First Name *" class="w-full p-4 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all" oninput="vField(this, 'name')"><span class="valid-icon">✅</span></div>
-                <div class="relative flex items-center"><input type="text" id="mname" placeholder="Father Name *" class="w-full p-4 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all" oninput="vField(this, 'name')"><span class="valid-icon">✅</span></div>
-                <div class="relative flex items-center"><input type="text" id="lname" placeholder="Grandfather Name *" class="w-full p-4 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all" oninput="vField(this, 'name')"><span class="valid-icon">✅</span></div>
-                <div class="relative flex items-center"><input type="email" id="email" placeholder="example@gmail.com *" class="w-full p-4 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all" oninput="vField(this, 'email')"><span class="valid-icon">✅</span></div>
-                <div class="relative flex items-center"><input type="text" id="phone" placeholder="Phone (09/07...) *" maxlength="10" class="w-full p-4 border-2 border-slate-100 rounded-2xl outline-none focus:border-blue-500 transition-all" oninput="vField(this, 'phone')"><span class="valid-icon">✅</span></div>
-                
-                <div class="flex items-start gap-2 p-2 bg-slate-50 rounded-xl border border-slate-200">
-                    <input type="checkbox" id="rule-check" class="mt-1 w-4 h-4 rounded">
-                    <label for="rule-check" class="text-xs text-slate-600 leading-tight">ሁሉንም የ MULE TECH ህጎች እና ደንቦች (Rules & Regulations) አንብቤ ተስማምቻለሁ።</label>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-slate-700">👤 የግል መረጃ</h2>
+                <select onchange="changeLang(this.value)" class="text-xs border rounded p-1 bg-blue-50">
+                    <option value="am">አማርኛ</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <div class="space-y-3">
+                <div class="relative flex items-center"><input type="text" id="fname" placeholder="First Name *" class="w-full p-3 border rounded-xl outline-none" oninput="vField(this, 'name')"><span class="valid-icon">✅</span></div>
+                <div class="relative flex items-center"><input type="text" id="mname" placeholder="Father Name *" class="w-full p-3 border rounded-xl outline-none" oninput="vField(this, 'name')"><span class="valid-icon">✅</span></div>
+                <div class="relative flex items-center"><input type="text" id="lname" placeholder="Grandfather Name *" class="w-full p-3 border rounded-xl outline-none" oninput="vField(this, 'name')"><span class="valid-icon">✅</span></div>
+                <div class="relative flex items-center"><input type="email" id="email" placeholder="Email (@gmail.com) *" class="w-full p-3 border rounded-xl outline-none" oninput="vField(this, 'email')"><span class="valid-icon">✅</span></div>
+                <div class="relative flex items-center"><input type="text" id="phone" placeholder="Phone (09/07...) *" maxlength="10" class="w-full p-3 border rounded-xl outline-none" oninput="vField(this, 'phone')"><span class="valid-icon">✅</span></div>
+                <div class="flex items-start gap-2 text-[10px] bg-slate-50 p-2 rounded">
+                    <input type="checkbox" id="rule-check"> <label>በ MULE TECH ህጎች እና ደንቦች ተስማምቻለሁ።</label>
                 </div>
             </div>
-            <button onclick="toWheel()" class="w-full bg-blue-700 text-white mt-6 py-4 rounded-[1.5rem] font-black text-lg hover:bg-blue-800 shadow-xl transform active:scale-95 transition-all">ቀጥል (NEXT) ➡️</button>
+            <button onclick="nav(1, 2)" class="w-full bg-blue-700 text-white mt-4 py-3 rounded-xl font-bold shadow-lg">NEXT ➡️</button>
         </div>
 
         <div id="page2" class="hidden text-center">
-            <button onclick="backTo(1)" class="float-left text-blue-700 font-bold mb-2 flex items-center gap-1">⬅️ Back</button>
-            <div class="clear-both"></div>
-            <h2 class="text-xl font-black text-blue-800 mb-2" id="wheel-title">🎡 እድልዎን ይሞክሩ!</h2>
-            <div id="wheel-container">
-                <div class="pointer"></div>
-                <canvas id="wheel"></canvas>
-            </div>
-            <button id="spin-btn" onclick="spinNow()" class="w-full bg-blue-700 text-white py-4 rounded-2xl font-black text-xl shadow-xl hover:shadow-blue-200 active:scale-95 transition-all">አሽከርክር (SPIN) 🌀</button>
+            <button onclick="nav(2, 1)" class="float-left text-blue-700 text-sm font-bold">⬅️ Back</button>
+            <h2 class="text-lg font-bold text-blue-800 clear-both">🎡 እድልዎን ይሞክሩ</h2>
+            <div id="wheel-container"><div class="pointer"></div><canvas id="wheel"></canvas></div>
+            <button id="spin-btn" onclick="spinNow()" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold shadow-xl">SPIN 🌀</button>
         </div>
 
         <div id="page3" class="hidden text-center">
-            <h2 id="result-msg" class="text-3xl font-black mb-6 text-blue-900"></h2>
+            <button onclick="nav(3, 2)" class="float-left text-blue-700 text-sm font-bold">⬅️ Back</button>
+            <h2 id="res-head" class="text-xl font-black text-blue-900 clear-both mb-4"></h2>
             
-            <div id="win-box" class="hidden">
-                <div class="bg-blue-50 p-8 rounded-[2rem] border-4 border-dashed border-blue-400 mb-6">
-                    <p class="text-blue-600 font-bold text-sm uppercase tracking-widest mb-2">Order ID Generated</p>
-                    <h3 id="order-id" class="text-5xl font-mono font-black text-blue-800"></h3>
-                </div>
+            <div id="win-display" class="hidden bg-green-50 p-6 rounded-2xl border-2 border-dashed border-green-400 mb-4">
+                <p class="text-green-700 font-bold text-sm">ያሸነፉት መለያ ቁጥር (Order ID):</p>
+                <h3 id="order-id" class="text-4xl font-mono font-black text-green-800 mt-2"></h3>
             </div>
 
-            <div id="paid-box" class="hidden">
-                <div class="bg-orange-50 p-6 rounded-[2rem] border-2 border-orange-200 mb-6 text-left">
-                    <p class="text-orange-800 font-bold mb-4">ይህ አገልግሎት በክፍያ የሚሰጥ ነው። የሚፈልጉትን ኮርስ ይምረጡ፡</p>
-                    <div class="space-y-3 text-sm">
-                        <div class="flex justify-between p-3 bg-white rounded-xl border border-orange-100"><span>Video Editing</span> <b>400 ETB</b></div>
-                        <div class="flex justify-between p-3 bg-white rounded-xl border border-orange-100"><span>Graphics Design</span> <b>400 ETB</b></div>
-                        <div class="flex justify-between p-3 bg-white rounded-xl border border-orange-100"><span>Free Internet</span> <b>400 ETB</b></div>
-                        <div class="flex justify-between p-3 bg-white rounded-xl border border-orange-100"><span>Social Management</span> <b>500 ETB</b></div>
-                    </div>
+            <div id="course-selection" class="hidden">
+                <p class="text-sm font-bold text-slate-600 mb-3">የሚፈልጉትን ኮርስ ይምረጡ፡</p>
+                <select id="course-dropdown" onchange="showCourseDetails(this.value)" class="w-full p-3 border-2 border-blue-400 rounded-xl font-bold bg-blue-50 mb-4">
+                    <option value="">-- ኮርስ ይምረጡ --</option>
+                    <option value="video">Video Editing</option>
+                    <option value="graphics">Graphics Design</option>
+                    <option value="net">Free Internet Config</option>
+                    <option value="social">Social Media Management</option>
+                </select>
+                <div id="course-info" class="hidden bg-slate-50 p-4 rounded-xl text-left border mb-4">
+                    <p id="c-desc" class="text-xs text-slate-600 mb-2"></p>
+                    <p class="font-bold text-blue-700">ዋጋ፡ <span id="c-price"></span> ETB</p>
                 </div>
+                <button id="to-pay-btn" onclick="nav(3, 4)" class="hidden w-full bg-orange-500 text-white py-3 rounded-xl font-bold">ወደ ክፍያ ሂድ 💳</button>
             </div>
+        </div>
 
-            <div class="grid grid-cols-2 gap-3">
-                <a href="https://youtube.com/@muletechreact" class="bg-red-600 text-white py-4 rounded-2xl font-bold text-sm">Subscribe YouTube</a>
-                <a href="https://t.me/muletechreact" class="bg-sky-500 text-white py-4 rounded-2xl font-bold text-sm">Join Telegram</a>
+        <div id="page4" class="hidden">
+            <button onclick="nav(4, 3)" class="text-blue-700 text-sm font-bold mb-4">⬅️ Back</button>
+            <h2 class="text-xl font-black text-blue-900 mb-4">💳 የክፍያ መፈፀሚያ</h2>
+            <div class="space-y-3 bg-blue-50 p-4 rounded-2xl border border-blue-100">
+                <div class="flex justify-between border-b pb-2"><span>Telebirr:</span> <b class="text-blue-800">0927275152</b></div>
+                <div class="flex justify-between border-b pb-2"><span>CBE:</span> <b class="text-blue-800">1000745084773</b></div>
+                <div class="flex justify-between pb-2"><span>Abyssinia:</span> <b class="text-blue-800">231006718</b></div>
+                <p class="text-[10px] text-center text-slate-500 mt-2">ስም፡ ሙሉዬ አርጎ ታደሰ</p>
             </div>
-            <button onclick="location.reload()" class="w-full mt-4 text-slate-400 font-bold text-xs uppercase tracking-widest">Restart System</button>
+            <p class="text-xs text-red-600 mt-4 font-bold">* ክፍያ የፈፀሙበትን Screenshot ለ @MuleTechSupport ይላኩ።</p>
+            <button onclick="location.reload()" class="w-full bg-slate-800 text-white mt-6 py-3 rounded-xl font-bold">ጨርስ (Finish)</button>
         </div>
     </div>
 
     <script>
-        const langData = {
-            am: { reg: "👤 የግል መረጃዎን ያስገቡ", wheel: "🎡 እድልዎን ይሞክሩ!", next: "ቀጥል (NEXT) ➡️" },
-            en: { reg: "👤 Enter Your Info", wheel: "🎡 Spin Your Luck!", next: "NEXT ➡️" },
-            or: { reg: "👤 Odeeffannoo Keessan", wheel: "🎡 Carraa Yaalaa!", next: "NEXT ➡️" },
-            tg: { reg: "👤 ሓበሬታኹም የእትዉ", wheel: "🎡 ዕድልኩም ፈትኑ!", next: "NEXT ➡️" }
-        };
-
-        function changeLang(l) {
-            document.getElementById('reg-title').innerText = langData[l].reg;
-            document.getElementById('wheel-title').innerText = langData[l].wheel;
-        }
-
         function vField(el, type) {
-            let valid = false;
-            if (type === 'name') valid = el.value.trim().length >= 3;
-            if (type === 'email') valid = el.value.toLowerCase().endsWith('@gmail.com');
-            if (type === 'phone') valid = el.value.length === 10 && (el.value.startsWith('09') || el.value.startsWith('07'));
-            
-            el.classList.toggle('input-error', !valid && el.value.length > 0);
-            el.parentElement.querySelector('.valid-icon').style.display = valid ? 'block' : 'none';
+            let v = false;
+            if(type==='name') v = el.value.trim().length >= 3;
+            if(type==='email') v = el.value.toLowerCase().endsWith('@gmail.com');
+            if(type==='phone') v = el.value.length === 10 && (el.value.startsWith('09') || el.value.startsWith('07'));
+            el.classList.toggle('input-error', !v && el.value.length > 0);
+            el.parentElement.querySelector('.valid-icon').style.display = v ? 'block' : 'none';
         }
 
-        function toWheel() {
-            const fields = ['fname', 'mname', 'lname', 'email', 'phone'];
-            let allOk = true;
-            fields.forEach(id => {
-                const el = document.getElementById(id);
-                const icon = el.parentElement.querySelector('.valid-icon').style.display;
-                if (icon !== 'block') {
-                    el.classList.add('input-error');
-                    allOk = false;
-                }
-            });
-
-            if (!document.getElementById('rule-check').checked) {
-                alert("እባክዎ ህጎቹን መስማማትዎን ያረጋግጡ!");
-                allOk = false;
+        function nav(from, to) {
+            if(from === 1 && to === 2) {
+                const fields = ['fname','mname','lname','email','phone'];
+                let ok = true;
+                fields.forEach(id => { if(document.getElementById(id).parentElement.querySelector('.valid-icon').style.display !== 'block') { document.getElementById(id).classList.add('input-error'); ok = false; }});
+                if(!document.getElementById('rule-check').checked) { alert("ህጎቹን ተስማሙ!"); ok = false; }
+                if(!ok) return;
             }
-
-            if (allOk) {
-                document.getElementById('page1').classList.add('hidden');
-                document.getElementById('page2').classList.remove('hidden');
-            }
+            document.getElementById('page'+from).classList.add('hidden');
+            document.getElementById('page'+to).classList.remove('hidden');
         }
 
-        function backTo(p) {
-            document.getElementById('page2').classList.add('hidden');
-            document.getElementById('page1').classList.remove('hidden');
-        }
-
+        const items = ["Video Editing", "Graphics Design", "Free Internet", "Social Management", "Subscribe YouTube", "Join Telegram", "Subscribe YouTube", "Join Telegram"];
         const canvas = document.getElementById('wheel');
         const ctx = canvas.getContext('2d');
-        const mainPrizes = ["Video Editing", "Graphics Design", "Free Internet", "Social Management"];
-        const extraPrizes = ["Subscribe YouTube", "Join Telegram", "Subscribe YouTube", "Join Telegram", "Subscribe YouTube", "Join Telegram"];
-        const items = [...mainPrizes, ...extraPrizes];
-        const colors = ["#1E40AF", "#1D4ED8", "#2563EB", "#3B82F6", "#60A5FA", "#93C5FD"];
-
-        function drawWheel() {
-            const arc = (2 * Math.PI) / items.length;
-            canvas.width = 320; canvas.height = 320;
+        function draw() {
+            const arc = (2*Math.PI)/items.length; canvas.width=300; canvas.height=300;
             items.forEach((item, i) => {
-                ctx.beginPath(); ctx.fillStyle = colors[i % colors.length];
-                ctx.moveTo(160, 160); ctx.arc(160, 160, 150, i * arc, (i + 1) * arc); ctx.fill();
-                ctx.save(); ctx.translate(160, 160); ctx.rotate(i * arc + arc / 2);
-                ctx.fillStyle = "white"; ctx.font = "bold 11px Arial"; ctx.fillText(item, 70, 5); ctx.restore();
+                ctx.beginPath(); ctx.fillStyle = i%2==0 ? '#1E40AF' : '#3B82F6';
+                ctx.moveTo(150,150); ctx.arc(150,150,140, i*arc, (i+1)*arc); ctx.fill();
+                ctx.save(); ctx.translate(150,150); ctx.rotate(i*arc+arc/2);
+                ctx.fillStyle="white"; ctx.font="bold 10px Arial"; ctx.fillText(item, 60, 5); ctx.restore();
             });
         }
-        drawWheel();
+        draw();
 
         let rot = 0;
         function spinNow() {
             document.getElementById('spin-btn').disabled = true;
-            const stopAt = Math.floor(3000 + Math.random() * 4000);
-            rot += stopAt;
+            rot += Math.floor(3000 + Math.random()*3000);
             canvas.style.transform = `rotate(${rot}deg)`;
             setTimeout(() => {
-                const actual = rot % 360;
-                const idx = items.length - 1 - Math.floor(actual / (360 / items.length));
-                showResult(items[idx]);
+                const idx = items.length - 1 - Math.floor((rot % 360) / (360 / items.length));
+                handleResult(items[idx]);
             }, 5000);
         }
 
-        async function showResult(prize) {
-            const isMain = mainPrizes.includes(prize);
-            const orderId = isMain ? "MULE" + Math.floor(100 + Math.random() * 899) : null;
-            
-            document.getElementById('page2').classList.add('hidden');
-            document.getElementById('page3').classList.remove('hidden');
-            document.getElementById('result-msg').innerText = prize;
+        const cData = {
+            video: { d: "CapCut, Premiere Pro እና After Effects በመጠቀም ፕሮፌሽናል ቪዲዮ ማቀናበር።", p: 400 },
+            graphics: { d: "Logo, Flyer, እና YouTube Thumbnail ዲዛይን በ Photoshop እና Canva።", p: 400 },
+            net: { d: "ለተለያዩ ኔትወርኮች የሚሆኑ የ SSH እና Xray ፋይሎች ኮንፊግሬሽን።", p: 400 },
+            social: { d: "የቴሌግራም እና ዩትዩብ ተከታዮችን በሲስተም ማሳደጊያ ስልቶች።", p: 500 }
+        };
 
+        function showCourseDetails(v) {
+            const info = document.getElementById('course-info');
+            const btn = document.getElementById('to-pay-btn');
+            if(v) {
+                info.classList.remove('hidden'); btn.classList.remove('hidden');
+                document.getElementById('c-desc').innerText = cData[v].d;
+                document.getElementById('c-price').innerText = cData[v].p;
+            } else { info.classList.add('hidden'); btn.classList.add('hidden'); }
+        }
+
+        function handleResult(res) {
+            nav(2, 3);
+            document.getElementById('res-head').innerText = res;
+            const isMain = ["Video Editing", "Graphics Design", "Free Internet", "Social Management"].includes(res);
             if(isMain) {
-                document.getElementById('win-box').classList.remove('hidden');
-                document.getElementById('order-id').innerText = orderId;
+                document.getElementById('win-display').classList.remove('hidden');
+                document.getElementById('course-selection').classList.add('hidden');
+                document.getElementById('order-id').innerText = "MULE" + Math.floor(100+Math.random()*899);
             } else {
-                document.getElementById('paid-box').classList.remove('hidden');
+                document.getElementById('win-display').classList.add('hidden');
+                document.getElementById('course-selection').classList.remove('hidden');
             }
-
-            const data = {
-                id: orderId || "PAID_SERVICE",
-                name: `${document.getElementById('fname').value} ${document.getElementById('mname').value}`,
-                phone: document.getElementById('phone').value,
-                prize: prize
-            };
-
-            const text = `🎯 MULE TECH SPIN\nID: ${data.id}\n👤 Client: ${data.name}\n📞 Phone: ${data.phone}\n🎁 Result: ${prize}`;
-            fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(text)}`);
+            const report = `🎯 MULE TECH SPIN\n👤 Name: ${document.getElementById('fname').value}\n📞 Phone: ${document.getElementById('phone').value}\n🎁 Result: ${res}`;
+            fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(report)}`);
         }
     </script>
 </body>
