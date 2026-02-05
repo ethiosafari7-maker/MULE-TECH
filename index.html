@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MULE TECH | Official Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hidden { display: none; }
+        .success-border { border-color: #28a745 !important; }
+        .error-border { border-color: #dc3545 !important; }
+        .checkmark { color: #28a745; margin-left: 5px; display: none; }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <div class="max-w-xl mx-auto my-10 bg-white p-8 rounded-xl shadow-2xl">
+        <div class="text-center mb-8">
+            <img src="https://r.jina.ai/i/6c21e6be959f400780211832049e776a" alt="Logo" class="w-32 mx-auto rounded-full shadow-lg">
+            <h1 class="text-4xl font-bold text-blue-600 mt-4">MULE TECH</h1>
+            <p class="text-gray-500">Your Digital Partner</p>
+        </div>
+
+        <div id="page1">
+            <h2 class="text-xl font-bold border-b-2 border-blue-500 pb-2 mb-4">👤 Personal Information</h2>
+            
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label class="block text-sm font-medium">ሙሉ ስም (First, Middle, Last) *</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="fname" placeholder="First" class="w-full p-2 border rounded" oninput="validateName(this)">
+                        <input type="text" id="mname" placeholder="Middle" class="w-full p-2 border rounded" oninput="validateName(this)">
+                        <input type="text" id="lname" placeholder="Last" class="w-full p-2 border rounded" oninput="validateName(this)">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium">ኢሜይል (Email) *</label>
+                    <input type="email" id="email" placeholder="example@gmail.com" class="w-full p-2 border rounded" oninput="validateEmail(this)">
+                    <p id="emailError" class="text-red-500 text-xs mt-1 hidden">ኢሜይል @gmail.com መሆን አለበት</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium">ስልክ ቁጥር (Phone) *</label>
+                    <input type="text" id="phone" placeholder="09/07********" maxlength="10" class="w-full p-2 border rounded" oninput="validatePhone(this)">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="number" id="age" placeholder="እድሜ" class="p-2 border rounded">
+                    <select id="gender" class="p-2 border rounded">
+                        <option>ወንድ (Male)</option>
+                        <option>ሴት (Female)</option>
+                    </select>
+                </div>
+
+                <textarea id="address" placeholder="የመኖርያ አድራሻ *" class="w-full p-2 border rounded"></textarea>
+
+                <h3 class="font-bold mt-4">👥 የቅርብ ተጠሪ</h3>
+                <input type="text" id="ename" placeholder="የተጠሪ ስም *" class="w-full p-2 border rounded">
+                <input type="text" id="ephone" placeholder="የተጠሪ ስልክ *" class="w-full p-2 border rounded">
+                <textarea id="eaddress" placeholder="የተጠሪ አድራሻ *" class="w-full p-2 border rounded"></textarea>
+            </div>
+
+            <button onclick="goToPage2()" class="w-full mt-6 bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">Next ➡️</button>
+        </div>
+
+        <div id="page2" class="hidden">
+            <h2 class="text-xl font-bold border-b-2 border-blue-500 pb-2 mb-4">🛠 Services & Payment</h2>
+            
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                <p class="font-bold">📂 Portfolio:</p>
+                <p class="text-sm">✓ Telegram: 1200+ Clients (Free Internet)</p>
+                <p class="text-sm">✓ YouTube: 340+ Students (Video Editing)</p>
+                <div class="flex gap-2 mt-2">
+                    <a href="https://youtube.com/@muletechreact" target="_blank" class="bg-red-600 text-white px-3 py-1 rounded text-xs font-bold">YouTube</a>
+                    <a href="https://t.me/muletechreact" target="_blank" class="bg-blue-500 text-white px-3 py-1 rounded text-xs font-bold">Telegram</a>
+                </div>
+            </div>
+
+            <label class="block font-bold mb-2">አገልግሎት ይምረጡ:</label>
+            <div class="space-y-2 mb-6">
+                <label class="block"><input type="checkbox" class="service-item" value="Video Editing"> Video Editing (400 ETB)</label>
+                <label class="block"><input type="checkbox" class="service-item" value="Graphics Design"> Graphics Design (400 ETB)</label>
+                <label class="block"><input type="checkbox" class="service-item" value="Free Internet"> Free Internet (400 ETB)</label>
+            </div>
+
+            <h3 class="font-bold mb-2">💳 Payment Method:</h3>
+            <div class="grid grid-cols-3 gap-2 mb-4">
+                <button onclick="showBank('Telebirr: 0927275152')" class="bg-gray-200 p-2 rounded text-xs">Telebirr</button>
+                <button onclick="showBank('CBE: 1000745084773')" class="bg-gray-200 p-2 rounded text-xs">CBE</button>
+                <button onclick="showBank('Abyssinia: 231006718')" class="bg-gray-200 p-2 rounded text-xs">Abyssinia</button>
+            </div>
+            <p id="bankDetails" class="bg-yellow-100 p-2 rounded text-sm text-center font-bold hidden"></p>
+
+            <button onclick="submitOrder()" class="w-full mt-6 bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700">Complete Order 🚀</button>
+            <button onclick="backToPage1()" class="w-full mt-2 text-gray-500 text-sm">⬅️ Back</button>
+
+            <div class="flex justify-between mt-10">
+                <a href="mailto:Mulereact6@gmail.com" class="text-blue-600 text-xs">Mulereact6@gmail.com</a>
+                <a href="https://t.me/MuleTechSupport" class="text-blue-600 text-xs">@MuleTechSupport</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateName(el) {
+            if(el.value.length >= 3) el.classList.add('success-border');
+            else el.classList.remove('success-border');
+        }
+
+        function validateEmail(el) {
+            const err = document.getElementById('emailError');
+            if(el.value.toLowerCase().endsWith('@gmail.com')) {
+                el.classList.add('success-border');
+                el.classList.remove('error-border');
+                err.classList.add('hidden');
+            } else {
+                el.classList.add('error-border');
+                err.classList.remove('hidden');
+            }
+        }
+
+        function validatePhone(el) {
+            if(el.value.length === 10 && (el.value.startsWith('09') || el.value.startsWith('07'))) {
+                el.classList.add('success-border');
+            } else {
+                el.classList.remove('success-border');
+            }
+        }
+
+        function goToPage2() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+        }
+
+        function backToPage1() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page1').classList.remove('hidden');
+        }
+
+        function showBank(msg) {
+            const b = document.getElementById('bankDetails');
+            b.innerText = msg + " | MULUYE ARGO TADESSE";
+            b.classList.remove('hidden');
+        }
+
+        async function submitOrder() {
+            const orderId = "Mule" + Math.floor(100 + Math.random() * 900);
+            const services = Array.from(document.querySelectorAll('.service-item:checked')).map(i => i.value);
+            
+            if(services.length === 0) return alert("እባክዎ ቢያንስ አንድ አገልግሎት ይምረጡ!");
+
+            const message = `🔔 አዲስ ትዕዛዝ: ${orderId}\n👤 ስም: ${document.getElementById('fname').value}\n📧 Email: ${document.getElementById('email').value}\n📞 ስልክ: ${document.getElementById('phone').value}\n🛠 አገልግሎት: ${services.join(', ')}`;
+            
+            const botToken = "8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc";
+            const chatId = "1312047180";
+            
+            await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`);
+            
+            alert(`✅ ትዕዛዝዎ ተልኳል! መለያ ቁጥርዎ፡ ${orderId}`);
+            location.reload();
+        }
+    </script>
+</body>
+</html>
