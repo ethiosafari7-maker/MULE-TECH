@@ -3,162 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MULE TECH | Official Solutions</title>
+    <title>MULE TECH | Spin & Learn</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .hidden { display: none; }
-        .success-border { border-color: #28a745 !important; }
-        .error-border { border-color: #dc3545 !important; }
-        .checkmark { color: #28a745; margin-left: 5px; display: none; }
+        #wheel-container { position: relative; width: 300px; height: 300px; margin: 20px auto; }
+        #wheel { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #1E88E5; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
+        .pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: red; clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 10; }
     </style>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-100 p-4">
 
-    <div class="max-w-xl mx-auto my-10 bg-white p-8 rounded-xl shadow-2xl">
-        <div class="text-center mb-8">
-            <img src="https://r.jina.ai/i/6c21e6be959f400780211832049e776a" alt="Logo" class="w-32 mx-auto rounded-full shadow-lg">
-            <h1 class="text-4xl font-bold text-blue-600 mt-4">MULE TECH</h1>
-            <p class="text-gray-500">Your Digital Partner</p>
+    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-2xl p-6">
+        <div class="text-center mb-4">
+            <img src="https://i.ibb.co/mC3Yf3f/20730.jpg" alt="Mule Tech Logo" class="w-32 h-32 mx-auto rounded-full border-4 border-blue-600 shadow-md">
+            <h1 class="text-2xl font-bold text-blue-700 mt-2">MULE TECH</h1>
+            <div class="mt-2 flex justify-center gap-2">
+                <button onclick="setLang('am')" class="text-xs bg-gray-200 px-2 py-1 rounded">አማርኛ</button>
+                <button onclick="setLang('en')" class="text-xs bg-gray-200 px-2 py-1 rounded">English</button>
+            </div>
         </div>
 
-        <div id="page1">
-            <h2 class="text-xl font-bold border-b-2 border-blue-500 pb-2 mb-4">👤 Personal Information</h2>
-            
-            <div class="grid grid-cols-1 gap-4">
-                <div>
-                    <label class="block text-sm font-medium">ሙሉ ስም (First, Middle, Last) *</label>
-                    <div class="flex gap-2">
-                        <input type="text" id="fname" placeholder="First" class="w-full p-2 border rounded" oninput="validateName(this)">
-                        <input type="text" id="mname" placeholder="Middle" class="w-full p-2 border rounded" oninput="validateName(this)">
-                        <input type="text" id="lname" placeholder="Last" class="w-full p-2 border rounded" oninput="validateName(this)">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium">ኢሜይል (Email) *</label>
-                    <input type="email" id="email" placeholder="example@gmail.com" class="w-full p-2 border rounded" oninput="validateEmail(this)">
-                    <p id="emailError" class="text-red-500 text-xs mt-1 hidden">ኢሜይል @gmail.com መሆን አለበት</p>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium">ስልክ ቁጥር (Phone) *</label>
-                    <input type="text" id="phone" placeholder="09/07********" maxlength="10" class="w-full p-2 border rounded" oninput="validatePhone(this)">
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <input type="number" id="age" placeholder="እድሜ" class="p-2 border rounded">
-                    <select id="gender" class="p-2 border rounded">
-                        <option>ወንድ (Male)</option>
-                        <option>ሴት (Female)</option>
-                    </select>
-                </div>
-
-                <textarea id="address" placeholder="የመኖርያ አድራሻ *" class="w-full p-2 border rounded"></textarea>
-
-                <h3 class="font-bold mt-4">👥 የቅርብ ተጠሪ</h3>
-                <input type="text" id="ename" placeholder="የተጠሪ ስም *" class="w-full p-2 border rounded">
-                <input type="text" id="ephone" placeholder="የተጠሪ ስልክ *" class="w-full p-2 border rounded">
-                <textarea id="eaddress" placeholder="የተጠሪ አድራሻ *" class="w-full p-2 border rounded"></textarea>
+        <div id="reg-form">
+            <h2 class="font-bold border-b mb-4" id="form-title">👤 የግል መረጃዎን ይሙሉ</h2>
+            <div class="space-y-3">
+                <input type="text" id="fullname" placeholder="ሙሉ ስም *" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-400 outline-none">
+                <input type="email" id="email" placeholder="ኢሜይል (@gmail.com) *" class="w-full p-2 border rounded outline-none">
+                <input type="text" id="phone" placeholder="ስልክ ቁጥር (09/07...) *" maxlength="10" class="w-full p-2 border rounded outline-none">
+                <input type="text" id="relative_addr" placeholder="የቅርብ ተጠሪ አድራሻ *" class="w-full p-2 border rounded outline-none">
             </div>
-
-            <button onclick="goToPage2()" class="w-full mt-6 bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">Next ➡️</button>
+            <button onclick="startSpinning()" class="w-full bg-blue-600 text-white mt-6 py-3 rounded-lg font-bold">ለመጀመር ተጫን (Next) ➡️</button>
         </div>
 
-        <div id="page2" class="hidden">
-            <h2 class="text-xl font-bold border-b-2 border-blue-500 pb-2 mb-4">🛠 Services & Payment</h2>
+        <div id="wheel-page" class="hidden text-center">
+            <h2 class="font-bold text-blue-600 mb-2">🎡 እድልዎን ይሞክሩ!</h2>
+            <p class="text-xs text-gray-500 mb-4">ጎማውን በማሽከርከር ነፃ ኮርሶችን ያግኙ</p>
             
-            <div class="bg-blue-50 p-4 rounded-lg mb-6">
-                <p class="font-bold">📂 Portfolio:</p>
-                <p class="text-sm">✓ Telegram: 1200+ Clients (Free Internet)</p>
-                <p class="text-sm">✓ YouTube: 340+ Students (Video Editing)</p>
-                <div class="flex gap-2 mt-2">
-                    <a href="https://youtube.com/@muletechreact" target="_blank" class="bg-red-600 text-white px-3 py-1 rounded text-xs font-bold">YouTube</a>
-                    <a href="https://t.me/muletechreact" target="_blank" class="bg-blue-500 text-white px-3 py-1 rounded text-xs font-bold">Telegram</a>
-                </div>
+            <div id="wheel-container">
+                <div class="pointer"></div>
+                <canvas id="wheel"></canvas>
             </div>
+            
+            <button id="spin-btn" onclick="spinNow()" class="w-full bg-orange-500 text-white py-3 rounded-xl font-bold text-lg shadow-lg">አሽከርክር (SPIN) 🌀</button>
+        </div>
 
-            <label class="block font-bold mb-2">አገልግሎት ይምረጡ:</label>
-            <div class="space-y-2 mb-6">
-                <label class="block"><input type="checkbox" class="service-item" value="Video Editing"> Video Editing (400 ETB)</label>
-                <label class="block"><input type="checkbox" class="service-item" value="Graphics Design"> Graphics Design (400 ETB)</label>
-                <label class="block"><input type="checkbox" class="service-item" value="Free Internet"> Free Internet (400 ETB)</label>
-            </div>
-
-            <h3 class="font-bold mb-2">💳 Payment Method:</h3>
-            <div class="grid grid-cols-3 gap-2 mb-4">
-                <button onclick="showBank('Telebirr: 0927275152')" class="bg-gray-200 p-2 rounded text-xs">Telebirr</button>
-                <button onclick="showBank('CBE: 1000745084773')" class="bg-gray-200 p-2 rounded text-xs">CBE</button>
-                <button onclick="showBank('Abyssinia: 231006718')" class="bg-gray-200 p-2 rounded text-xs">Abyssinia</button>
-            </div>
-            <p id="bankDetails" class="bg-yellow-100 p-2 rounded text-sm text-center font-bold hidden"></p>
-
-            <button onclick="submitOrder()" class="w-full mt-6 bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700">Complete Order 🚀</button>
-            <button onclick="backToPage1()" class="w-full mt-2 text-gray-500 text-sm">⬅️ Back</button>
-
-            <div class="flex justify-between mt-10">
-                <a href="mailto:Mulereact6@gmail.com" class="text-blue-600 text-xs">Mulereact6@gmail.com</a>
-                <a href="https://t.me/MuleTechSupport" class="text-blue-600 text-xs">@MuleTechSupport</a>
+        <div id="success-page" class="hidden text-center p-6">
+            <div class="text-6xl mb-4">🎁</div>
+            <h2 class="text-2xl font-bold text-green-600">እንኳን ደስ አለዎት!</h2>
+            <p id="prize-text" class="font-bold my-4 text-gray-700"></p>
+            <p id="order-id" class="text-blue-500 font-mono text-lg"></p>
+            <div class="mt-6 space-y-2">
+                <a href="https://youtube.com/@muletechreact" class="block bg-red-600 text-white py-2 rounded">YouTube Subscribe</a>
+                <a href="https://t.me/muletechreact" class="block bg-blue-500 text-white py-2 rounded">Join Telegram</a>
             </div>
         </div>
     </div>
 
     <script>
-        function validateName(el) {
-            if(el.value.length >= 3) el.classList.add('success-border');
-            else el.classList.remove('success-border');
-        }
+        const canvas = document.getElementById('wheel');
+        const ctx = canvas.getContext('2d');
+        const items = [
+            "Video Editing", "Graphics Design", "Free Internet", "Social Management",
+            "YouTube Sub 1", "YouTube Sub 2", "YouTube Sub 3", "YouTube Sub 4", "YouTube Sub 5", "YouTube Sub 6", "YouTube Sub 7",
+            "Telegram Join 1", "Telegram Join 2", "Telegram Join 3", "Telegram Join 4"
+        ];
+        const colors = ["#1E88E5", "#FFC107", "#28A745", "#E91E63", "#FF5722", "#9C27B0", "#00BCD4"];
 
-        function validateEmail(el) {
-            const err = document.getElementById('emailError');
-            if(el.value.toLowerCase().endsWith('@gmail.com')) {
-                el.classList.add('success-border');
-                el.classList.remove('error-border');
-                err.classList.add('hidden');
+        function drawWheel() {
+            const size = items.length;
+            const arc = (2 * Math.PI) / size;
+            canvas.width = 300; canvas.height = 300;
+            items.forEach((item, i) => {
+                ctx.beginPath();
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.moveTo(150, 150);
+                ctx.arc(150, 150, 140, i * arc, (i + 1) * arc);
+                ctx.fill();
+                ctx.save();
+                ctx.translate(150, 150);
+                ctx.rotate(i * arc + arc / 2);
+                ctx.fillStyle = "white";
+                ctx.font = "bold 8px Arial";
+                ctx.fillText(item.substring(0, 10), 60, 5);
+                ctx.restore();
+            });
+        }
+        drawWheel();
+
+        function startSpinning() {
+            const name = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            if(name.length > 3 && email.endsWith('@gmail.com') && phone.length == 10) {
+                document.getElementById('reg-form').classList.add('hidden');
+                document.getElementById('wheel-page').classList.remove('hidden');
             } else {
-                el.classList.add('error-border');
-                err.classList.remove('hidden');
+                alert("እባክዎ መረጃዎን በትክክል ይሙሉ!");
             }
         }
 
-        function validatePhone(el) {
-            if(el.value.length === 10 && (el.value.startsWith('09') || el.value.startsWith('07'))) {
-                el.classList.add('success-border');
-            } else {
-                el.classList.remove('success-border');
-            }
+        let rotation = 0;
+        function spinNow() {
+            const btn = document.getElementById('spin-btn');
+            btn.disabled = true;
+            const extraDegree = Math.floor(2000 + Math.random() * 2000);
+            rotation += extraDegree;
+            canvas.style.transform = `rotate(${rotation}deg)`;
+            
+            setTimeout(() => {
+                const actualDegree = rotation % 360;
+                const index = items.length - 1 - Math.floor(actualDegree / (360 / items.length));
+                finishOrder(items[index]);
+            }, 4000);
         }
 
-        function goToPage2() {
-            document.getElementById('page1').classList.add('hidden');
-            document.getElementById('page2').classList.remove('hidden');
-        }
-
-        function backToPage1() {
-            document.getElementById('page2').classList.add('hidden');
-            document.getElementById('page1').classList.remove('hidden');
-        }
-
-        function showBank(msg) {
-            const b = document.getElementById('bankDetails');
-            b.innerText = msg + " | MULUYE ARGO TADESSE";
-            b.classList.remove('hidden');
-        }
-
-        async function submitOrder() {
+        async function finishOrder(prize) {
             const orderId = "Mule" + Math.floor(100 + Math.random() * 900);
-            const services = Array.from(document.querySelectorAll('.service-item:checked')).map(i => i.value);
-            
-            if(services.length === 0) return alert("እባክዎ ቢያንስ አንድ አገልግሎት ይምረጡ!");
+            const u = {
+                name: document.getElementById('fullname').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                addr: document.getElementById('relative_addr').value
+            };
 
-            const message = `🔔 አዲስ ትዕዛዝ: ${orderId}\n👤 ስም: ${document.getElementById('fname').value}\n📧 Email: ${document.getElementById('email').value}\n📞 ስልክ: ${document.getElementById('phone').value}\n🛠 አገልግሎት: ${services.join(', ')}`;
+            const msg = `🔔 አዲስ እድለኛ!\n🆔 ID: ${orderId}\n👤 ስም: ${u.name}\n📧 Email: ${u.email}\n📞 ስልክ: ${u.phone}\n📍 ተጠሪ አድራሻ: ${u.addr}\n🎁 ያሸነፈው: ${prize}`;
             
-            const botToken = "8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc";
-            const chatId = "1312047180";
-            
-            await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`);
-            
-            alert(`✅ ትዕዛዝዎ ተልኳል! መለያ ቁጥርዎ፡ ${orderId}`);
-            location.reload();
+            await fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(msg)}`);
+
+            document.getElementById('wheel-page').classList.add('hidden');
+            document.getElementById('success-page').classList.remove('hidden');
+            document.getElementById('prize-text').innerText = "የደረሰዎት ስጦታ፡ " + prize;
+            document.getElementById('order-id').innerText = "የትዕዛዝ ቁጥር፡ " + orderId;
         }
     </script>
 </body>
