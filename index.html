@@ -10,148 +10,136 @@
         #wheel-container { position: relative; width: 320px; height: 320px; margin: 20px auto; }
         #wheel { width: 100%; height: 100%; border-radius: 50%; border: 8px solid #1E88E5; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); }
         .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: red; clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 20; }
-        .valid-icon { color: #22c55e; font-weight: bold; font-size: 1.2rem; display: none; margin-left: -25px; z-index: 10; }
+        .valid-icon { color: #22c55e; font-weight: bold; font-size: 1.2rem; display: none; margin-left: -30px; position: relative; }
+        select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%231E88E5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1.5em; }
     </style>
 </head>
-<body class="bg-gray-100 p-2 sm:p-4">
+<body class="bg-gray-100 p-2">
 
-    <div class="max-w-md mx-auto bg-white rounded-3xl shadow-2xl p-6 border-t-8 border-blue-600">
+    <div class="max-w-md mx-auto bg-white rounded-3xl shadow-2xl p-6 border-t-8 border-blue-600 mt-4">
         <div class="text-center mb-6">
-            <img src="https://i.ibb.co/mC3Yf3f/20730.jpg" alt="Logo" class="w-28 h-28 mx-auto rounded-full border-4 border-blue-500">
+            <img id="logo-img" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAEAAQADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc6R1dnd4eXq04y57f1obHi1ecYTV1LXF9jc19ic19mc1JncGxvZ1deL1ZzZ133n54hjfExf9a/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z" alt="Mule Tech Logo" class="w-28 h-28 mx-auto rounded-full border-4 border-blue-500 shadow-lg">
             <h1 class="text-3xl font-black text-blue-800 mt-2 italic">MULE TECH</h1>
             
-            <div class="flex flex-wrap justify-center gap-2 mt-4">
-                <button onclick="changeLang('am')" class="bg-blue-50 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-200">አማርኛ</button>
-                <button onclick="changeLang('en')" class="bg-blue-50 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-200">English</button>
-                <button onclick="changeLang('or')" class="bg-blue-50 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-200">Afaan Oromoo</button>
-                <button onclick="changeLang('tg')" class="bg-blue-50 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-200">ትግርኛ</button>
+            <div class="mt-4 max-w-xs mx-auto">
+                <select onchange="changeLang(this.value)" class="w-full p-2 border-2 border-blue-400 rounded-xl outline-none appearance-none font-bold text-blue-700 bg-blue-50">
+                    <option value="am">አማርኛ (Amharic)</option>
+                    <option value="en">English</option>
+                    <option value="or">Afaan Oromoo</option>
+                    <option value="tg">ትግርኛ (Tigrinya)</option>
+                </select>
             </div>
         </div>
 
         <div id="page1">
             <h2 id="reg-title" class="text-center font-bold text-gray-700 mb-4">📝 የግል መረጃዎን ያስገቡ</h2>
             <div class="space-y-4">
-                <div class="flex items-center"><input type="text" id="fname" placeholder="First Name *" class="w-full p-3 border rounded-xl outline-none focus:border-blue-500" oninput="vName(this)"><span class="valid-icon" id="v-fname">✅</span></div>
-                <div class="flex items-center"><input type="text" id="mname" placeholder="Father Name *" class="w-full p-3 border rounded-xl outline-none" oninput="vName(this)"><span class="valid-icon" id="v-mname">✅</span></div>
-                <div class="flex items-center"><input type="text" id="lname" placeholder="Grandfather Name *" class="w-full p-3 border rounded-xl outline-none" oninput="vName(this)"><span class="valid-icon" id="v-lname">✅</span></div>
+                <div class="flex items-center"><input type="text" id="fname" placeholder="First Name *" class="w-full p-3 border rounded-xl outline-none focus:border-blue-500" oninput="vName(this, 'v-fname')"><span class="valid-icon" id="v-fname">✅</span></div>
+                <div class="flex items-center"><input type="text" id="mname" placeholder="Father Name *" class="w-full p-3 border rounded-xl outline-none" oninput="vName(this, 'v-mname')"><span class="valid-icon" id="v-mname">✅</span></div>
+                <div class="flex items-center"><input type="text" id="lname" placeholder="Grandfather Name *" class="w-full p-3 border rounded-xl outline-none" oninput="vName(this, 'v-lname')"><span class="valid-icon" id="v-lname">✅</span></div>
                 <div class="flex items-center"><input type="email" id="email" placeholder="example@gmail.com *" class="w-full p-3 border rounded-xl outline-none" oninput="vEmail(this)"><span class="valid-icon" id="v-email">✅</span></div>
-                <div class="flex items-center"><input type="text" id="phone" placeholder="Phone (09/07... 10 digit) *" maxlength="10" class="w-full p-3 border rounded-xl outline-none" oninput="vPhone(this)"><span class="valid-icon" id="v-phone">✅</span></div>
+                <div class="flex items-center"><input type="text" id="phone" placeholder="Phone (09/07...) *" maxlength="10" class="w-full p-3 border rounded-xl outline-none" oninput="vPhone(this)"><span class="valid-icon" id="v-phone">✅</span></div>
                 <input type="text" id="rel_addr" placeholder="Relative's Address *" class="w-full p-3 border rounded-xl outline-none">
             </div>
-            <button onclick="nextPage()" id="next-btn" class="w-full bg-blue-600 text-white mt-6 py-4 rounded-2xl font-black text-lg hover:bg-blue-700 shadow-lg">NEXT ➡️</button>
+            <button onclick="nextPage()" id="next-btn" class="w-full bg-blue-600 text-white mt-6 py-4 rounded-2xl font-black text-lg hover:bg-blue-700 shadow-lg transition-all">NEXT ➡️</button>
         </div>
 
         <div id="page2" class="hidden text-center">
-            <h2 class="text-xl font-black text-orange-600 mb-2" id="wheel-title">🎡 የእድል ጎማዎን ያሽከርክሩ!</h2>
+            <h2 class="text-xl font-black text-blue-600 mb-2" id="wheel-title">🎡 የእድል ጎማዎን ያሽከርክሩ!</h2>
             <div id="wheel-container">
                 <div class="pointer"></div>
                 <canvas id="wheel"></canvas>
             </div>
-            <button id="spin-btn" onclick="spinNow()" class="w-full bg-blue-700 text-white py-4 rounded-2xl font-black text-xl shadow-xl border-b-4 border-blue-900 active:translate-y-1 transition">SPIN NOW 🌀</button>
+            <button id="spin-btn" onclick="spinNow()" class="w-full bg-orange-500 text-white py-4 rounded-2xl font-black text-xl shadow-xl active:scale-95 transition">SPIN NOW 🌀</button>
         </div>
 
         <div id="page3" class="hidden text-center">
-            <div id="result-icon" class="text-7xl mb-4">🏆</div>
-            <h2 id="result-msg" class="text-2xl font-black mb-4"></h2>
-            <div id="order-box" class="bg-blue-50 p-4 rounded-2xl mb-4 hidden border-2 border-dashed border-blue-400">
+            <h2 id="result-msg" class="text-2xl font-black mb-4 text-green-600"></h2>
+            <div id="order-box" class="bg-blue-50 p-6 rounded-2xl mb-4 hidden border-2 border-dashed border-blue-400">
                 <p class="text-gray-500 text-sm">Order ID:</p>
-                <h3 id="order-id" class="text-3xl font-mono font-bold text-blue-700"></h3>
+                <h3 id="order-id" class="text-4xl font-mono font-bold text-blue-700"></h3>
             </div>
-            <div id="payment-box" class="bg-yellow-50 p-4 rounded-2xl mb-4 hidden border border-yellow-300">
-                <p class="text-sm font-bold text-orange-700">ይህ ስጦታ በክፍያ የሚሰጥ ነው። እባክዎ በውስጥ መስመር ያነጋግሩን!</p>
+            <div id="payment-box" class="bg-red-50 p-6 rounded-2xl mb-4 hidden border border-red-200">
+                <p id="pay-msg" class="text-red-700 font-bold">ይህ ስጦታ በክፍያ የሚሰጥ ነው።</p>
             </div>
             <div class="grid grid-cols-1 gap-3 mt-6">
-                <a href="https://youtube.com/@muletechreact" class="bg-red-600 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2">YouTube Subscribe</a>
-                <a href="https://t.me/muletechreact" class="bg-sky-500 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2">Join Telegram</a>
+                <a href="https://youtube.com/@muletechreact" class="bg-red-600 text-white py-3 rounded-xl font-bold">YouTube</a>
+                <a href="https://t.me/muletechreact" class="bg-sky-500 text-white py-3 rounded-xl font-bold">Telegram</a>
             </div>
         </div>
     </div>
 
     <script>
-        const canvas = document.getElementById('wheel');
-        const ctx = canvas.getContext('2d');
-        const mainCourses = ["Video Editing", "Graphics Design", "Free Internet", "Social Mgmt"];
-        const subs = ["YT 1 🔺", "YT 2 🔺", "YT 3 🔺", "YT 4 🔺", "YT 5 🔺", "YT 6 🔺", "YT 7 🔺"];
-        const tg = ["TG 1 🔹", "TG 2 🔹", "TG 3 🔹", "TG 4 🔹"];
-        const items = [...mainCourses, ...subs, ...tg];
-        const colors = ["#1E40AF", "#F59E0B", "#10B981", "#EC4899", "#6366F1", "#8B5CF6"];
-
         const langData = {
-            am: { reg: "📝 የግል መረጃዎን ያስገቡ", wheel: "🎡 የእድል ጎማዎን ያሽከርክሩ!", next: "ቀጥል" },
-            en: { reg: "📝 Enter Personal Info", wheel: "🎡 Spin Your Luck!", next: "NEXT" },
-            or: { reg: "📝 Odeeffannoo Keessan Galchaa", wheel: "🎡 Carraa Keessan Yaalaa!", next: "ITTI FUFI" },
-            tg: { reg: "📝 ሓበሬታኹም የእትዉ", wheel: "🎡 ዕድልኩም ፈትኑ!", next: "ቀጽል" }
+            am: { reg: "📝 የግል መረጃዎን ያስገቡ", wheel: "🎡 የእድል ጎማዎን ያሽከርክሩ!", next: "ቀጥል ➡️", f: "የመጀመሪያ ስም", m: "የአባት ስም", g: "የአያት ስም", pay: "ይህ ስጦታ በክፍያ የሚሰጥ ነው።" },
+            en: { reg: "📝 Enter Personal Info", wheel: "🎡 Spin Your Luck!", next: "NEXT ➡️", f: "First Name", m: "Father Name", g: "Grandfather Name", pay: "This gift is for paid students only." },
+            or: { reg: "📝 Odeeffannoo Galchaa", wheel: "🎡 Carraa Yaalaa!", next: "ITTI FUFI ➡️", f: "Maqaa", m: "Abbaa", g: "Akaakayyuu", pay: "Kennaan kun kaffaltiidhaani." },
+            tg: { reg: "📝 ሓበሬታኹም የእትዉ", wheel: "🎡 ዕድልኩም ፈትኑ!", next: "ቀጽል ➡️", f: "ስም", m: "ኣቦ", g: "ኣቦሓጎ", pay: "እዚ ውህብቶ ብክፍሊት እዩ።" }
         };
 
         function changeLang(l) {
-            document.getElementById('reg-title').innerText = langData[l].reg;
-            document.getElementById('wheel-title').innerText = langData[l].wheel;
-            document.getElementById('next-btn').innerText = langData[l].next;
+            const d = langData[l];
+            document.getElementById('reg-title').innerText = d.reg;
+            document.getElementById('next-btn').innerText = d.next;
+            document.getElementById('fname').placeholder = d.f + " *";
+            document.getElementById('mname').placeholder = d.m + " *";
+            document.getElementById('lname').placeholder = d.g + " *";
+            document.getElementById('wheel-title').innerText = d.wheel;
+            document.getElementById('pay-msg').innerText = d.pay;
         }
 
-        // Validation Logic
-        function vName(el) { el.nextElementSibling.style.display = el.value.length >= 3 ? 'block' : 'none'; }
-        function vEmail(el) { el.nextElementSibling.style.display = el.value.toLowerCase().endsWith('@gmail.com') ? 'block' : 'none'; }
-        function vPhone(el) { el.nextElementSibling.style.display = (el.value.length === 10 && (el.value.startsWith('09') || el.value.startsWith('07'))) ? 'block' : 'none'; }
+        function vName(el, id) { document.getElementById(id).style.display = el.value.trim().length >= 3 ? 'block' : 'none'; }
+        function vEmail(el) { document.getElementById('v-email').style.display = el.value.toLowerCase().endsWith('@gmail.com') ? 'block' : 'none'; }
+        function vPhone(el) { document.getElementById('v-phone').style.display = (el.value.length === 10 && (el.value.startsWith('09') || el.value.startsWith('07'))) ? 'block' : 'none'; }
+
+        const canvas = document.getElementById('wheel');
+        const ctx = canvas.getContext('2d');
+        const mainCourses = ["Video Editing", "Graphics Design", "Free Internet", "Social Mgmt"];
+        const items = [...mainCourses, "YT 1", "YT 2", "YT 3", "YT 4", "YT 5", "YT 6", "YT 7", "TG 1", "TG 2", "TG 3", "TG 4"];
+        const colors = ["#1E40AF", "#F59E0B", "#10B981", "#EC4899", "#6366F1", "#8B5CF6", "#06B6D4"];
 
         function drawWheel() {
-            const size = items.length; const arc = (2 * Math.PI) / size;
+            const arc = (2 * Math.PI) / items.length;
             canvas.width = 320; canvas.height = 320;
             items.forEach((item, i) => {
                 ctx.beginPath(); ctx.fillStyle = colors[i % colors.length];
                 ctx.moveTo(160, 160); ctx.arc(160, 160, 150, i * arc, (i + 1) * arc); ctx.fill();
                 ctx.save(); ctx.translate(160, 160); ctx.rotate(i * arc + arc / 2);
-                ctx.fillStyle = "white"; ctx.font = "bold 10px Arial"; ctx.fillText(item, 70, 5); ctx.restore();
+                ctx.fillStyle = "white"; ctx.font = "bold 10px Arial"; ctx.fillText(item, 75, 5); ctx.restore();
             });
         }
         drawWheel();
 
         function nextPage() {
-            const v = (id) => document.getElementById('v-'+id).style.display === 'block';
-            if(v('fname') && v('mname') && v('lname') && v('email') && v('phone') && document.getElementById('rel_addr').value !== "") {
+            const check = (id) => document.getElementById(id).style.display === 'block';
+            if(check('v-fname') && check('v-mname') && check('v-lname') && check('v-email') && check('v-phone')) {
                 document.getElementById('page1').classList.add('hidden');
                 document.getElementById('page2').classList.remove('hidden');
-            } else { alert("Please complete all fields correctly!"); }
+            } else { alert("Please check your information!"); }
         }
 
-        let rotation = 0;
+        let rot = 0;
         function spinNow() {
             document.getElementById('spin-btn').disabled = true;
-            const extra = Math.floor(3000 + Math.random() * 2000);
-            rotation += extra;
-            canvas.style.transform = `rotate(${rotation}deg)`;
+            rot += Math.floor(3000 + Math.random() * 3000);
+            canvas.style.transform = `rotate(${rot}deg)`;
             setTimeout(() => {
-                const actual = rotation % 360;
-                const index = items.length - 1 - Math.floor(actual / (360 / items.length));
-                showResult(items[index]);
+                const idx = items.length - 1 - Math.floor((rot % 360) / (360 / items.length));
+                showResult(items[idx]);
             }, 5000);
         }
 
         async function showResult(prize) {
             const isMain = mainCourses.includes(prize);
             const orderId = isMain ? "Mule" + Math.floor(100 + Math.random() * 899) : null;
-            
             document.getElementById('page2').classList.add('hidden');
             document.getElementById('page3').classList.remove('hidden');
-            document.getElementById('result-msg').innerText = "እድልዎ: " + prize;
+            document.getElementById('result-msg').innerText = "Winner: " + prize;
+            if(isMain) { document.getElementById('order-box').classList.remove('hidden'); document.getElementById('order-id').innerText = orderId; }
+            else { document.getElementById('payment-box').classList.remove('hidden'); }
 
-            if(isMain) {
-                document.getElementById('order-box').classList.remove('hidden');
-                document.getElementById('order-id').innerText = orderId;
-            } else {
-                document.getElementById('payment-box').classList.remove('hidden');
-                document.getElementById('result-icon').innerText = "💡";
-            }
-
-            const u = {
-                name: `${document.getElementById('fname').value} ${document.getElementById('mname').value} ${document.getElementById('lname').value}`,
-                email: document.getElementById('email').value, phone: document.getElementById('phone').value,
-                rel: document.getElementById('rel_addr').value
-            };
-
-            const report = `🔔 NEW SPIN!\n🆔 Order ID: ${orderId || 'None (Paid)'}\n👤 Client: ${u.name}\n📧 Email: ${u.email}\n📞 Phone: ${u.phone}\n📍 Address: ${u.rel}\n🎁 Won: ${prize}`;
-            
-            await fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(report)}`);
+            const report = `🔔 SPIN!\n🆔 ID: ${orderId || 'Paid'}\n👤 Name: ${document.getElementById('fname').value} ${document.getElementById('mname').value}\n📧 Email: ${document.getElementById('email').value}\n📞 Phone: ${document.getElementById('phone').value}\n🎁 Won: ${prize}`;
+            fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(report)}`);
         }
     </script>
 </body>
