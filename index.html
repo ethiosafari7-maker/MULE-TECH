@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MULE TECH | Premium</title>
+    <title>MULE TECH | Premium Solution</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .hidden { display: none; }
@@ -12,41 +12,41 @@
         .pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: #EF4444; clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 20; }
         .input-error { border: 2px solid #EF4444 !important; background-color: #FEF2F2; }
         .valid-icon { color: #10B981; font-weight: bold; position: absolute; right: 15px; display: none; }
+        .gold-text { color: #FFD700; font-weight: 900; font-size: 2.5rem; line-height: 1; }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
 
-    <div class="max-w-md w-full bg-white rounded-[2rem] shadow-2xl p-6 border-t-[8px] border-blue-700">
+    <div class="max-w-md w-full bg-white rounded-[2.5rem] shadow-2xl p-6 border-t-[10px] border-blue-700">
         
-        <div class="text-center mb-4">
-            <div class="w-20 h-20 bg-blue-700 rounded-full mx-auto flex items-center justify-center text-white font-black text-xl shadow-lg border-4 border-white mb-2">MULE</div>
-            <h1 class="text-2xl font-black text-blue-900 italic">MULE TECH</h1>
+        <div class="text-center mb-6">
+            <h1 class="gold-text">MULE TECH</h1>
+            <div class="mt-4 flex flex-wrap justify-center gap-2">
+                <button onclick="changeLang('am')" class="text-[10px] bg-blue-50 px-2 py-1 rounded border">አማርኛ</button>
+                <button onclick="changeLang('en')" class="text-[10px] bg-blue-50 px-2 py-1 rounded border">English</button>
+                <button onclick="changeLang('or')" class="text-[10px] bg-blue-50 px-2 py-1 rounded border">Afaan Oromoo</button>
+                <button onclick="changeLang('tg')" class="text-[10px] bg-blue-50 px-2 py-1 rounded border">ትግርኛ</button>
+            </div>
         </div>
 
         <div id="page1">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="font-bold text-slate-700">👤 የግል መረጃ</h2>
-                <select onchange="changeLang(this.value)" class="text-xs border rounded p-1 bg-blue-50">
-                    <option value="am">አማርኛ</option>
-                    <option value="en">English</option>
-                </select>
-            </div>
+            <h2 id="reg-title" class="font-bold text-slate-700 mb-4 text-center">👤 የግል መረጃዎን ያስገቡ</h2>
             <div class="space-y-3">
                 <div class="relative flex items-center"><input type="text" id="fname" placeholder="First Name *" class="w-full p-3 border rounded-xl outline-none" oninput="vField(this, 'name')"><span class="valid-icon">✅</span></div>
                 <div class="relative flex items-center"><input type="text" id="mname" placeholder="Father Name *" class="w-full p-3 border rounded-xl outline-none" oninput="vField(this, 'name')"><span class="valid-icon">✅</span></div>
                 <div class="relative flex items-center"><input type="text" id="lname" placeholder="Grandfather Name *" class="w-full p-3 border rounded-xl outline-none" oninput="vField(this, 'name')"><span class="valid-icon">✅</span></div>
                 <div class="relative flex items-center"><input type="email" id="email" placeholder="Email (@gmail.com) *" class="w-full p-3 border rounded-xl outline-none" oninput="vField(this, 'email')"><span class="valid-icon">✅</span></div>
                 <div class="relative flex items-center"><input type="text" id="phone" placeholder="Phone (09/07...) *" maxlength="10" class="w-full p-3 border rounded-xl outline-none" oninput="vField(this, 'phone')"><span class="valid-icon">✅</span></div>
-                <div class="flex items-start gap-2 text-[10px] bg-slate-50 p-2 rounded">
-                    <input type="checkbox" id="rule-check"> <label>በ MULE TECH ህጎች እና ደንቦች ተስማምቻለሁ።</label>
+                <div class="flex items-start gap-2 text-[10px] bg-slate-50 p-2 rounded border">
+                    <input type="checkbox" id="rule-check"> <label id="rule-text">በ MULE TECH ህጎች እና ደንቦች ተስማምቻለሁ።</label>
                 </div>
             </div>
-            <button onclick="nav(1, 2)" class="w-full bg-blue-700 text-white mt-4 py-3 rounded-xl font-bold shadow-lg">NEXT ➡️</button>
+            <button onclick="nav(1, 2)" id="next-btn" class="w-full bg-blue-700 text-white mt-4 py-3 rounded-xl font-bold">ቀጥል (NEXT) ➡️</button>
         </div>
 
         <div id="page2" class="hidden text-center">
             <button onclick="nav(2, 1)" class="float-left text-blue-700 text-sm font-bold">⬅️ Back</button>
-            <h2 class="text-lg font-bold text-blue-800 clear-both">🎡 እድልዎን ይሞክሩ</h2>
+            <h2 id="wheel-title" class="text-lg font-bold text-blue-800 clear-both">🎡 እድልዎን ይሞክሩ</h2>
             <div id="wheel-container"><div class="pointer"></div><canvas id="wheel"></canvas></div>
             <button id="spin-btn" onclick="spinNow()" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold shadow-xl">SPIN 🌀</button>
         </div>
@@ -56,18 +56,19 @@
             <h2 id="res-head" class="text-xl font-black text-blue-900 clear-both mb-4"></h2>
             
             <div id="win-display" class="hidden bg-green-50 p-6 rounded-2xl border-2 border-dashed border-green-400 mb-4">
-                <p class="text-green-700 font-bold text-sm">ያሸነፉት መለያ ቁጥር (Order ID):</p>
-                <h3 id="order-id" class="text-4xl font-mono font-black text-green-800 mt-2"></h3>
+                <p class="text-green-700 font-bold text-sm">Order ID:</p>
+                <h3 id="order-id" class="text-4xl font-mono font-black text-green-800"></h3>
+                <button onclick="sendFinalReport('Won Free')" class="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg font-bold">መረጃውን ላክ (Send Data)</button>
             </div>
 
             <div id="course-selection" class="hidden">
                 <p class="text-sm font-bold text-slate-600 mb-3">የሚፈልጉትን ኮርስ ይምረጡ፡</p>
                 <select id="course-dropdown" onchange="showCourseDetails(this.value)" class="w-full p-3 border-2 border-blue-400 rounded-xl font-bold bg-blue-50 mb-4">
                     <option value="">-- ኮርስ ይምረጡ --</option>
-                    <option value="video">Video Editing</option>
-                    <option value="graphics">Graphics Design</option>
-                    <option value="net">Free Internet Config</option>
-                    <option value="social">Social Media Management</option>
+                    <option value="Video Editing">Video Editing</option>
+                    <option value="Graphics Design">Graphics Design</option>
+                    <option value="Free Internet Config">Free Internet Config</option>
+                    <option value="Social Management">Social Media Management</option>
                 </select>
                 <div id="course-info" class="hidden bg-slate-50 p-4 rounded-xl text-left border mb-4">
                     <p id="c-desc" class="text-xs text-slate-600 mb-2"></p>
@@ -80,18 +81,31 @@
         <div id="page4" class="hidden">
             <button onclick="nav(4, 3)" class="text-blue-700 text-sm font-bold mb-4">⬅️ Back</button>
             <h2 class="text-xl font-black text-blue-900 mb-4">💳 የክፍያ መፈፀሚያ</h2>
-            <div class="space-y-3 bg-blue-50 p-4 rounded-2xl border border-blue-100">
-                <div class="flex justify-between border-b pb-2"><span>Telebirr:</span> <b class="text-blue-800">0927275152</b></div>
-                <div class="flex justify-between border-b pb-2"><span>CBE:</span> <b class="text-blue-800">1000745084773</b></div>
-                <div class="flex justify-between pb-2"><span>Abyssinia:</span> <b class="text-blue-800">231006718</b></div>
-                <p class="text-[10px] text-center text-slate-500 mt-2">ስም፡ ሙሉዬ አርጎ ታደሰ</p>
+            <div class="space-y-3 bg-blue-50 p-4 rounded-2xl border border-blue-100 font-bold text-sm">
+                <div class="flex justify-between border-b pb-2"><span>Telebirr:</span> <span>0927275152</span></div>
+                <div class="flex justify-between border-b pb-2"><span>CBE:</span> <span>1000745084773</span></div>
+                <div class="flex justify-between"><span>Abyssinia:</span> <span>231006718</span></div>
             </div>
-            <p class="text-xs text-red-600 mt-4 font-bold">* ክፍያ የፈፀሙበትን Screenshot ለ @MuleTechSupport ይላኩ።</p>
-            <button onclick="location.reload()" class="w-full bg-slate-800 text-white mt-6 py-3 rounded-xl font-bold">ጨርስ (Finish)</button>
+            <button onclick="sendFinalReport('Purchased Course')" class="w-full bg-blue-700 text-white mt-6 py-3 rounded-xl font-bold">ክፍያውን ጨርሻለሁ (Finish)</button>
         </div>
     </div>
 
     <script>
+        const langData = {
+            am: { reg: "👤 የግል መረጃዎን ያስገቡ", wheel: "🎡 እድልዎን ይሞክሩ", next: "ቀጥል (NEXT) ➡️", rule: "በ MULE TECH ህጎች እና ደንቦች ተስማምቻለሁ።" },
+            en: { reg: "👤 Enter Personal Information", wheel: "🎡 Spin Your Luck", next: "NEXT ➡️", rule: "I agree to MULE TECH Rules & Regs." },
+            or: { reg: "👤 Odeeffannoo Galchaa", wheel: "🎡 Carraa Yaalaa", next: "NEXT ➡️", rule: "Seera MULE TECH walii galeera." },
+            tg: { reg: "👤 ሓበሬታኹም የእትዉ", wheel: "🎡 ዕድልኩም ፈትኑ", next: "NEXT ➡️", rule: "ብሕግታት MULE TECH ተሰማሚዐ ኣለኹ።" }
+        };
+
+        function changeLang(l) {
+            const d = langData[l];
+            document.getElementById('reg-title').innerText = d.reg;
+            document.getElementById('wheel-title').innerText = d.wheel;
+            document.getElementById('next-btn').innerText = d.next;
+            document.getElementById('rule-text').innerText = d.rule;
+        }
+
         function vField(el, type) {
             let v = false;
             if(type==='name') v = el.value.trim().length >= 3;
@@ -106,7 +120,7 @@
                 const fields = ['fname','mname','lname','email','phone'];
                 let ok = true;
                 fields.forEach(id => { if(document.getElementById(id).parentElement.querySelector('.valid-icon').style.display !== 'block') { document.getElementById(id).classList.add('input-error'); ok = false; }});
-                if(!document.getElementById('rule-check').checked) { alert("ህጎቹን ተስማሙ!"); ok = false; }
+                if(!document.getElementById('rule-check').checked) { alert("Please agree to rules!"); ok = false; }
                 if(!ok) return;
             }
             document.getElementById('page'+from).classList.add('hidden');
@@ -128,31 +142,18 @@
         draw();
 
         let rot = 0;
+        let globalSpinResult = "";
+        let globalOrderID = "";
+
         function spinNow() {
             document.getElementById('spin-btn').disabled = true;
             rot += Math.floor(3000 + Math.random()*3000);
             canvas.style.transform = `rotate(${rot}deg)`;
             setTimeout(() => {
                 const idx = items.length - 1 - Math.floor((rot % 360) / (360 / items.length));
-                handleResult(items[idx]);
+                globalSpinResult = items[idx];
+                handleResult(globalSpinResult);
             }, 5000);
-        }
-
-        const cData = {
-            video: { d: "CapCut, Premiere Pro እና After Effects በመጠቀም ፕሮፌሽናል ቪዲዮ ማቀናበር።", p: 400 },
-            graphics: { d: "Logo, Flyer, እና YouTube Thumbnail ዲዛይን በ Photoshop እና Canva።", p: 400 },
-            net: { d: "ለተለያዩ ኔትወርኮች የሚሆኑ የ SSH እና Xray ፋይሎች ኮንፊግሬሽን።", p: 400 },
-            social: { d: "የቴሌግራም እና ዩትዩብ ተከታዮችን በሲስተም ማሳደጊያ ስልቶች።", p: 500 }
-        };
-
-        function showCourseDetails(v) {
-            const info = document.getElementById('course-info');
-            const btn = document.getElementById('to-pay-btn');
-            if(v) {
-                info.classList.remove('hidden'); btn.classList.remove('hidden');
-                document.getElementById('c-desc').innerText = cData[v].d;
-                document.getElementById('c-price').innerText = cData[v].p;
-            } else { info.classList.add('hidden'); btn.classList.add('hidden'); }
         }
 
         function handleResult(res) {
@@ -160,15 +161,41 @@
             document.getElementById('res-head').innerText = res;
             const isMain = ["Video Editing", "Graphics Design", "Free Internet", "Social Management"].includes(res);
             if(isMain) {
+                globalOrderID = "MULE" + Math.floor(100+Math.random()*899);
                 document.getElementById('win-display').classList.remove('hidden');
                 document.getElementById('course-selection').classList.add('hidden');
-                document.getElementById('order-id').innerText = "MULE" + Math.floor(100+Math.random()*899);
+                document.getElementById('order-id').innerText = globalOrderID;
             } else {
                 document.getElementById('win-display').classList.add('hidden');
                 document.getElementById('course-selection').classList.remove('hidden');
             }
-            const report = `🎯 MULE TECH SPIN\n👤 Name: ${document.getElementById('fname').value}\n📞 Phone: ${document.getElementById('phone').value}\n🎁 Result: ${res}`;
-            fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(report)}`);
+        }
+
+        function showCourseDetails(v) {
+            const info = document.getElementById('course-info');
+            const btn = document.getElementById('to-pay-btn');
+            if(v) {
+                info.classList.remove('hidden'); btn.classList.remove('hidden');
+                const prices = {"Video Editing": 400, "Graphics Design": 400, "Free Internet Config": 400, "Social Management": 500};
+                document.getElementById('c-desc').innerText = "Professional Course in " + v;
+                document.getElementById('c-price').innerText = prices[v];
+            } else { info.classList.add('hidden'); btn.classList.add('hidden'); }
+        }
+
+        async function sendFinalReport(status) {
+            const selectedCourse = document.getElementById('course-dropdown').value;
+            const report = `🚀 NEW MULE TECH ORDER\n\n` +
+                `👤 Name: ${document.getElementById('fname').value} ${document.getElementById('mname').value} ${document.getElementById('lname').value}\n` +
+                `📧 Email: ${document.getElementById('email').value}\n` +
+                `📞 Phone: ${document.getElementById('phone').value}\n` +
+                `🎡 Spin Result: ${globalSpinResult}\n` +
+                `🆔 Order ID: ${globalOrderID || "N/A"}\n` +
+                `📚 Selected Course: ${selectedCourse || "None"}\n` +
+                `💳 Status: ${status}`;
+
+            await fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(report)}`);
+            alert("መረጃው ተልኳል! እናመሰግናለን።");
+            location.reload();
         }
     </script>
 </body>
