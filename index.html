@@ -3,58 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MULE TECH | Spin & Learn</title>
+    <title>MULE TECH | Advanced Spin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .hidden { display: none; }
-        #wheel-container { position: relative; width: 300px; height: 300px; margin: 20px auto; }
-        #wheel { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #1E88E5; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
-        .pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: red; clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 10; }
+        #wheel-container { position: relative; width: 320px; height: 320px; margin: 20px auto; }
+        #wheel { width: 100%; height: 100%; border-radius: 50%; border: 8px solid #1E88E5; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); }
+        .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px; background: red; clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 20; }
+        .valid-icon { color: #22c55e; font-weight: bold; font-size: 1.2rem; display: none; margin-left: -25px; z-index: 10; }
     </style>
 </head>
-<body class="bg-gray-100 p-4">
+<body class="bg-gray-100 p-2 sm:p-4">
 
-    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-2xl p-6">
-        <div class="text-center mb-4">
-            <img src="https://i.ibb.co/mC3Yf3f/20730.jpg" alt="Mule Tech Logo" class="w-32 h-32 mx-auto rounded-full border-4 border-blue-600 shadow-md">
-            <h1 class="text-2xl font-bold text-blue-700 mt-2">MULE TECH</h1>
-            <div class="mt-2 flex justify-center gap-2">
-                <button onclick="setLang('am')" class="text-xs bg-gray-200 px-2 py-1 rounded">አማርኛ</button>
-                <button onclick="setLang('en')" class="text-xs bg-gray-200 px-2 py-1 rounded">English</button>
-            </div>
-        </div>
-
-        <div id="reg-form">
-            <h2 class="font-bold border-b mb-4" id="form-title">👤 የግል መረጃዎን ይሙሉ</h2>
-            <div class="space-y-3">
-                <input type="text" id="fullname" placeholder="ሙሉ ስም *" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-400 outline-none">
-                <input type="email" id="email" placeholder="ኢሜይል (@gmail.com) *" class="w-full p-2 border rounded outline-none">
-                <input type="text" id="phone" placeholder="ስልክ ቁጥር (09/07...) *" maxlength="10" class="w-full p-2 border rounded outline-none">
-                <input type="text" id="relative_addr" placeholder="የቅርብ ተጠሪ አድራሻ *" class="w-full p-2 border rounded outline-none">
-            </div>
-            <button onclick="startSpinning()" class="w-full bg-blue-600 text-white mt-6 py-3 rounded-lg font-bold">ለመጀመር ተጫን (Next) ➡️</button>
-        </div>
-
-        <div id="wheel-page" class="hidden text-center">
-            <h2 class="font-bold text-blue-600 mb-2">🎡 እድልዎን ይሞክሩ!</h2>
-            <p class="text-xs text-gray-500 mb-4">ጎማውን በማሽከርከር ነፃ ኮርሶችን ያግኙ</p>
+    <div class="max-w-md mx-auto bg-white rounded-3xl shadow-2xl p-6 border-t-8 border-blue-600">
+        <div class="text-center mb-6">
+            <img src="https://i.ibb.co/mC3Yf3f/20730.jpg" alt="Logo" class="w-28 h-28 mx-auto rounded-full border-4 border-blue-500">
+            <h1 class="text-3xl font-black text-blue-800 mt-2 italic">MULE TECH</h1>
             
+            <div class="flex flex-wrap justify-center gap-2 mt-4">
+                <button onclick="changeLang('am')" class="bg-blue-50 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-200">አማርኛ</button>
+                <button onclick="changeLang('en')" class="bg-blue-50 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-200">English</button>
+                <button onclick="changeLang('or')" class="bg-blue-50 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-200">Afaan Oromoo</button>
+                <button onclick="changeLang('tg')" class="bg-blue-50 px-3 py-1 rounded-full text-xs font-bold hover:bg-blue-200">ትግርኛ</button>
+            </div>
+        </div>
+
+        <div id="page1">
+            <h2 id="reg-title" class="text-center font-bold text-gray-700 mb-4">📝 የግል መረጃዎን ያስገቡ</h2>
+            <div class="space-y-4">
+                <div class="flex items-center"><input type="text" id="fname" placeholder="First Name *" class="w-full p-3 border rounded-xl outline-none focus:border-blue-500" oninput="vName(this)"><span class="valid-icon" id="v-fname">✅</span></div>
+                <div class="flex items-center"><input type="text" id="mname" placeholder="Father Name *" class="w-full p-3 border rounded-xl outline-none" oninput="vName(this)"><span class="valid-icon" id="v-mname">✅</span></div>
+                <div class="flex items-center"><input type="text" id="lname" placeholder="Grandfather Name *" class="w-full p-3 border rounded-xl outline-none" oninput="vName(this)"><span class="valid-icon" id="v-lname">✅</span></div>
+                <div class="flex items-center"><input type="email" id="email" placeholder="example@gmail.com *" class="w-full p-3 border rounded-xl outline-none" oninput="vEmail(this)"><span class="valid-icon" id="v-email">✅</span></div>
+                <div class="flex items-center"><input type="text" id="phone" placeholder="Phone (09/07... 10 digit) *" maxlength="10" class="w-full p-3 border rounded-xl outline-none" oninput="vPhone(this)"><span class="valid-icon" id="v-phone">✅</span></div>
+                <input type="text" id="rel_addr" placeholder="Relative's Address *" class="w-full p-3 border rounded-xl outline-none">
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="w-full bg-blue-600 text-white mt-6 py-4 rounded-2xl font-black text-lg hover:bg-blue-700 shadow-lg">NEXT ➡️</button>
+        </div>
+
+        <div id="page2" class="hidden text-center">
+            <h2 class="text-xl font-black text-orange-600 mb-2" id="wheel-title">🎡 የእድል ጎማዎን ያሽከርክሩ!</h2>
             <div id="wheel-container">
                 <div class="pointer"></div>
                 <canvas id="wheel"></canvas>
             </div>
-            
-            <button id="spin-btn" onclick="spinNow()" class="w-full bg-orange-500 text-white py-3 rounded-xl font-bold text-lg shadow-lg">አሽከርክር (SPIN) 🌀</button>
+            <button id="spin-btn" onclick="spinNow()" class="w-full bg-blue-700 text-white py-4 rounded-2xl font-black text-xl shadow-xl border-b-4 border-blue-900 active:translate-y-1 transition">SPIN NOW 🌀</button>
         </div>
 
-        <div id="success-page" class="hidden text-center p-6">
-            <div class="text-6xl mb-4">🎁</div>
-            <h2 class="text-2xl font-bold text-green-600">እንኳን ደስ አለዎት!</h2>
-            <p id="prize-text" class="font-bold my-4 text-gray-700"></p>
-            <p id="order-id" class="text-blue-500 font-mono text-lg"></p>
-            <div class="mt-6 space-y-2">
-                <a href="https://youtube.com/@muletechreact" class="block bg-red-600 text-white py-2 rounded">YouTube Subscribe</a>
-                <a href="https://t.me/muletechreact" class="block bg-blue-500 text-white py-2 rounded">Join Telegram</a>
+        <div id="page3" class="hidden text-center">
+            <div id="result-icon" class="text-7xl mb-4">🏆</div>
+            <h2 id="result-msg" class="text-2xl font-black mb-4"></h2>
+            <div id="order-box" class="bg-blue-50 p-4 rounded-2xl mb-4 hidden border-2 border-dashed border-blue-400">
+                <p class="text-gray-500 text-sm">Order ID:</p>
+                <h3 id="order-id" class="text-3xl font-mono font-bold text-blue-700"></h3>
+            </div>
+            <div id="payment-box" class="bg-yellow-50 p-4 rounded-2xl mb-4 hidden border border-yellow-300">
+                <p class="text-sm font-bold text-orange-700">ይህ ስጦታ በክፍያ የሚሰጥ ነው። እባክዎ በውስጥ መስመር ያነጋግሩን!</p>
+            </div>
+            <div class="grid grid-cols-1 gap-3 mt-6">
+                <a href="https://youtube.com/@muletechreact" class="bg-red-600 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2">YouTube Subscribe</a>
+                <a href="https://t.me/muletechreact" class="bg-sky-500 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2">Join Telegram</a>
             </div>
         </div>
     </div>
@@ -62,78 +70,88 @@
     <script>
         const canvas = document.getElementById('wheel');
         const ctx = canvas.getContext('2d');
-        const items = [
-            "Video Editing", "Graphics Design", "Free Internet", "Social Management",
-            "YouTube Sub 1", "YouTube Sub 2", "YouTube Sub 3", "YouTube Sub 4", "YouTube Sub 5", "YouTube Sub 6", "YouTube Sub 7",
-            "Telegram Join 1", "Telegram Join 2", "Telegram Join 3", "Telegram Join 4"
-        ];
-        const colors = ["#1E88E5", "#FFC107", "#28A745", "#E91E63", "#FF5722", "#9C27B0", "#00BCD4"];
+        const mainCourses = ["Video Editing", "Graphics Design", "Free Internet", "Social Mgmt"];
+        const subs = ["YT 1 🔺", "YT 2 🔺", "YT 3 🔺", "YT 4 🔺", "YT 5 🔺", "YT 6 🔺", "YT 7 🔺"];
+        const tg = ["TG 1 🔹", "TG 2 🔹", "TG 3 🔹", "TG 4 🔹"];
+        const items = [...mainCourses, ...subs, ...tg];
+        const colors = ["#1E40AF", "#F59E0B", "#10B981", "#EC4899", "#6366F1", "#8B5CF6"];
+
+        const langData = {
+            am: { reg: "📝 የግል መረጃዎን ያስገቡ", wheel: "🎡 የእድል ጎማዎን ያሽከርክሩ!", next: "ቀጥል" },
+            en: { reg: "📝 Enter Personal Info", wheel: "🎡 Spin Your Luck!", next: "NEXT" },
+            or: { reg: "📝 Odeeffannoo Keessan Galchaa", wheel: "🎡 Carraa Keessan Yaalaa!", next: "ITTI FUFI" },
+            tg: { reg: "📝 ሓበሬታኹም የእትዉ", wheel: "🎡 ዕድልኩም ፈትኑ!", next: "ቀጽል" }
+        };
+
+        function changeLang(l) {
+            document.getElementById('reg-title').innerText = langData[l].reg;
+            document.getElementById('wheel-title').innerText = langData[l].wheel;
+            document.getElementById('next-btn').innerText = langData[l].next;
+        }
+
+        // Validation Logic
+        function vName(el) { el.nextElementSibling.style.display = el.value.length >= 3 ? 'block' : 'none'; }
+        function vEmail(el) { el.nextElementSibling.style.display = el.value.toLowerCase().endsWith('@gmail.com') ? 'block' : 'none'; }
+        function vPhone(el) { el.nextElementSibling.style.display = (el.value.length === 10 && (el.value.startsWith('09') || el.value.startsWith('07'))) ? 'block' : 'none'; }
 
         function drawWheel() {
-            const size = items.length;
-            const arc = (2 * Math.PI) / size;
-            canvas.width = 300; canvas.height = 300;
+            const size = items.length; const arc = (2 * Math.PI) / size;
+            canvas.width = 320; canvas.height = 320;
             items.forEach((item, i) => {
-                ctx.beginPath();
-                ctx.fillStyle = colors[i % colors.length];
-                ctx.moveTo(150, 150);
-                ctx.arc(150, 150, 140, i * arc, (i + 1) * arc);
-                ctx.fill();
-                ctx.save();
-                ctx.translate(150, 150);
-                ctx.rotate(i * arc + arc / 2);
-                ctx.fillStyle = "white";
-                ctx.font = "bold 8px Arial";
-                ctx.fillText(item.substring(0, 10), 60, 5);
-                ctx.restore();
+                ctx.beginPath(); ctx.fillStyle = colors[i % colors.length];
+                ctx.moveTo(160, 160); ctx.arc(160, 160, 150, i * arc, (i + 1) * arc); ctx.fill();
+                ctx.save(); ctx.translate(160, 160); ctx.rotate(i * arc + arc / 2);
+                ctx.fillStyle = "white"; ctx.font = "bold 10px Arial"; ctx.fillText(item, 70, 5); ctx.restore();
             });
         }
         drawWheel();
 
-        function startSpinning() {
-            const name = document.getElementById('fullname').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            if(name.length > 3 && email.endsWith('@gmail.com') && phone.length == 10) {
-                document.getElementById('reg-form').classList.add('hidden');
-                document.getElementById('wheel-page').classList.remove('hidden');
-            } else {
-                alert("እባክዎ መረጃዎን በትክክል ይሙሉ!");
-            }
+        function nextPage() {
+            const v = (id) => document.getElementById('v-'+id).style.display === 'block';
+            if(v('fname') && v('mname') && v('lname') && v('email') && v('phone') && document.getElementById('rel_addr').value !== "") {
+                document.getElementById('page1').classList.add('hidden');
+                document.getElementById('page2').classList.remove('hidden');
+            } else { alert("Please complete all fields correctly!"); }
         }
 
         let rotation = 0;
         function spinNow() {
-            const btn = document.getElementById('spin-btn');
-            btn.disabled = true;
-            const extraDegree = Math.floor(2000 + Math.random() * 2000);
-            rotation += extraDegree;
+            document.getElementById('spin-btn').disabled = true;
+            const extra = Math.floor(3000 + Math.random() * 2000);
+            rotation += extra;
             canvas.style.transform = `rotate(${rotation}deg)`;
-            
             setTimeout(() => {
-                const actualDegree = rotation % 360;
-                const index = items.length - 1 - Math.floor(actualDegree / (360 / items.length));
-                finishOrder(items[index]);
-            }, 4000);
+                const actual = rotation % 360;
+                const index = items.length - 1 - Math.floor(actual / (360 / items.length));
+                showResult(items[index]);
+            }, 5000);
         }
 
-        async function finishOrder(prize) {
-            const orderId = "Mule" + Math.floor(100 + Math.random() * 900);
+        async function showResult(prize) {
+            const isMain = mainCourses.includes(prize);
+            const orderId = isMain ? "Mule" + Math.floor(100 + Math.random() * 899) : null;
+            
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.remove('hidden');
+            document.getElementById('result-msg').innerText = "እድልዎ: " + prize;
+
+            if(isMain) {
+                document.getElementById('order-box').classList.remove('hidden');
+                document.getElementById('order-id').innerText = orderId;
+            } else {
+                document.getElementById('payment-box').classList.remove('hidden');
+                document.getElementById('result-icon').innerText = "💡";
+            }
+
             const u = {
-                name: document.getElementById('fullname').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                addr: document.getElementById('relative_addr').value
+                name: `${document.getElementById('fname').value} ${document.getElementById('mname').value} ${document.getElementById('lname').value}`,
+                email: document.getElementById('email').value, phone: document.getElementById('phone').value,
+                rel: document.getElementById('rel_addr').value
             };
 
-            const msg = `🔔 አዲስ እድለኛ!\n🆔 ID: ${orderId}\n👤 ስም: ${u.name}\n📧 Email: ${u.email}\n📞 ስልክ: ${u.phone}\n📍 ተጠሪ አድራሻ: ${u.addr}\n🎁 ያሸነፈው: ${prize}`;
+            const report = `🔔 NEW SPIN!\n🆔 Order ID: ${orderId || 'None (Paid)'}\n👤 Client: ${u.name}\n📧 Email: ${u.email}\n📞 Phone: ${u.phone}\n📍 Address: ${u.rel}\n🎁 Won: ${prize}`;
             
-            await fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(msg)}`);
-
-            document.getElementById('wheel-page').classList.add('hidden');
-            document.getElementById('success-page').classList.remove('hidden');
-            document.getElementById('prize-text').innerText = "የደረሰዎት ስጦታ፡ " + prize;
-            document.getElementById('order-id').innerText = "የትዕዛዝ ቁጥር፡ " + orderId;
+            await fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(report)}`);
         }
     </script>
 </body>
