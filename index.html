@@ -17,8 +17,8 @@
         .check-mark { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: none; color: #10b981; font-weight: bold; }
         
         .gold-header { color: #FFD700; font-weight: 900; font-size: 2.2rem; text-transform: uppercase; text-align: center; line-height: 1; }
-        /* ገፅ 1 ሙሉ ስክሪን እንዲሆን */
         #page1-content { max-height: 70vh; overflow-y: auto; padding-right: 5px; }
+        .note-box { background: #fffbeb; border: 1px solid #fcd34d; padding: 8px; border-radius: 8px; margin-bottom: 12px; font-size: 11px; color: #92400e; font-weight: bold; text-align: center; }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen flex items-center justify-center p-2 font-sans">
@@ -42,7 +42,7 @@
                 <div class="v-field"><input type="text" id="mname" placeholder="Father Name *" class="v-input" oninput="validate(this, 'name')"><span class="check-mark">✅</span></div>
                 <div class="v-field"><input type="text" id="lname" placeholder="Grandfather Name *" class="v-input" oninput="validate(this, 'name')"><span class="check-mark">✅</span></div>
                 <div class="flex gap-2">
-                    <div class="v-field w-1/3"><input type="number" id="age" placeholder="Age (15-50)" class="v-input" oninput="validate(this, 'age')"><span class="check-mark">✅</span></div>
+                    <div class="v-field w-1/3"><input type="number" id="age" placeholder="Age" class="v-input" oninput="validate(this, 'age')"><span class="check-mark">✅</span></div>
                     <select id="gender" class="v-input w-2/3 border-slate-300 bg-white" onchange="this.classList.add('v-valid')">
                         <option value="" id="t-gen">Gender</option>
                         <option value="Male">Male</option>
@@ -69,7 +69,7 @@
         </div>
 
         <div id="page3" class="hidden">
-            <div class="flex justify-between mb-3"><button onclick="nav(3, 2)" class="text-blue-700 font-bold text-xs">⬅️ Back</button></div>
+            <div class="flex justify-between mb-3"><button onclick="nav(3, 2)" id="back-to-wheel-btn" class="text-blue-700 font-bold text-xs">⬅️ Back</button></div>
             <h2 class="text-center font-bold text-blue-900 mb-4">ኮርስ ይምረጡ</h2>
             <select id="course-dropdown" onchange="showCourse(this.value)" class="v-input border-blue-400 bg-blue-50">
                 <option value="">-- Select Course --</option>
@@ -87,34 +87,42 @@
 
         <div id="page4" class="hidden">
             <div class="flex justify-between mb-3"><button onclick="nav(4, 3)" class="text-blue-700 font-bold text-xs">⬅️ Back</button></div>
-            <h2 class="text-center font-bold text-blue-900 mb-4">ባንክ ይምረጡ</h2>
+            <h2 id="t-pay" class="text-center font-bold text-blue-900 mb-4">የክፍያ አማራጭ ይምረጡ</h2>
+            
+            <div id="t-pay-note" class="note-box">
+                ⚠️ ማሳሰቢያ፡ በፈለጉት የባንክ አማራጭ መጀመሪያ ይክፈሉ እና የክፍያ መለያ ቁጥር (Order ID) ይሰጣችኋል።
+            </div>
+
             <select id="bank-selector" class="v-input border-blue-600 bg-white mb-6">
                 <option value="">-- Select Bank --</option>
                 <option value="Telebirr - 0927275152">Telebirr (0927275152)</option>
                 <option value="CBE - 1000745084773">CBE (1000745084773)</option>
                 <option value="Abyssinia - 231006718">Abyssinia (231006718)</option>
             </select>
-            <button onclick="generateFinalID()" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold">CONFIRM 🆔</button>
+            <button onclick="generateFinalID()" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold">CONFIRM & GET ID 🆔</button>
         </div>
 
         <div id="page5" class="hidden text-center">
             <div class="flex justify-between mb-3"><button onclick="nav(5, 4)" class="text-blue-700 font-bold text-xs">⬅️ Back</button></div>
             <div class="bg-green-50 p-6 rounded-3xl border-2 border-dashed border-green-500">
                 <h3 id="final-id" class="text-3xl font-mono font-black text-green-800 my-2"></h3>
-                <p class="text-[10px] text-slate-500">ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።</p>
+                <p id="t-final-msg" class="text-[10px] text-slate-500">ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።</p>
             </div>
-            <button onclick="sendReport()" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold mt-6">FINISH 🚀</button>
+            <button onclick="sendReport('Final')" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold mt-6 shadow-lg">FINISH & SEND 🚀</button>
         </div>
 
         <div id="win-msg" class="hidden text-center p-6">
             <div class="text-5xl mb-4">🎉</div>
             <h2 class="text-2xl font-bold text-blue-800 mb-2">እንኳን ደስ አለዎት!</h2>
-            <p class="text-slate-600 mb-4">መረጃዎ በትክክል ተልኳል። በቅርቡ በውስጥ መስመር እናገኝዎታለን።</p>
+            <p id="t-win-desc" class="text-slate-600 mb-4">መረጃዎ በትክክል ተልኳል። በቅርቡ በውስጥ መስመር እናገኝዎታለን።</p>
             <button onclick="location.reload()" class="bg-blue-700 text-white px-6 py-2 rounded-lg">ጨርሻለሁ</button>
         </div>
     </div>
 
     <script>
+        const botToken = "8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc";
+        const chatId = "1312047180";
+
         function validate(el, type) {
             let v = false;
             const val = el.value.trim();
@@ -129,19 +137,23 @@
         function nav(f, t) {
             if(f === 1 && t === 2) {
                 const inputs = document.querySelectorAll('#page1 .v-input');
-                let allOk = true;
-                inputs.forEach(i => { if(!i.classList.contains('v-valid')) { i.style.borderColor = "red"; allOk = false; }});
-                if(!allOk || !document.getElementById('rule-check').checked) { alert("Please complete form!"); return; }
-                if(localStorage.getItem('mule_played')) { nav(1, 3); return; }
+                let ok = true;
+                inputs.forEach(i => { if(!i.classList.contains('v-valid')) { i.style.borderColor="red"; ok=false; }});
+                if(!ok || !document.getElementById('rule-check').checked) { alert("Please complete form!"); return; }
+                if(localStorage.getItem('mule_played')) { 
+                    nav(1, 3); 
+                    document.getElementById('back-to-wheel-btn').classList.add('hidden');
+                    return; 
+                }
             }
             document.getElementById('page'+f).classList.add('hidden');
             document.getElementById('page'+t).classList.remove('hidden');
         }
 
+        const items = ["Video Editing", "Graphics Design", "Free Internet", "Social Management", "Subscribe YouTube", "Join Telegram", "Subscribe YouTube", "Join Telegram"];
         const canvas = document.getElementById('wheel');
         const ctx = canvas.getContext('2d');
-        const items = ["Video Editing", "Graphics Design", "Free Internet", "Social Management", "Subscribe YouTube", "Join Telegram", "Subscribe YouTube", "Join Telegram"];
-        
+
         function drawWheel() {
             const arc = (Math.PI*2)/items.length; canvas.width=260; canvas.height=260;
             items.forEach((item, i) => {
@@ -164,13 +176,12 @@
                 const idx = items.length - 1 - Math.floor((deg % 360) / (360/items.length));
                 spinResult = items[idx];
                 
-                // አራቱ ዋና ኮርሶች ከሆኑ (idx 0 to 3)
                 if(idx <= 3) {
-                    sendReport("Free Win"); // በቀጥታ ሪፖርት ላክ
+                    sendReport("Free Win");
                     document.getElementById('page2').classList.add('hidden');
                     document.getElementById('win-msg').classList.remove('hidden');
                 } else {
-                    nav(2, 3); // ወደ መጠይቁ ቀጥል
+                    nav(2, 3);
                 }
             }, 5000);
         }
@@ -185,7 +196,7 @@
             } else { box.classList.add('hidden'); }
         }
 
-        let finalID = "WINNER";
+        let finalID = "FREE-WIN";
         function generateFinalID() {
             if(!document.getElementById('bank-selector').value) { alert("Select Bank!"); return; }
             finalID = "MULE-" + Math.floor(10000 + Math.random() * 89999);
@@ -193,30 +204,37 @@
             nav(4, 5);
         }
 
-        async function sendReport(type = "Paid") {
-            const botToken = "8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc";
-            const chatId = "1312047180";
+        async function sendReport(type) {
             const msg = `🚀 MULE TECH REPORT\n` +
                 `👤 Name: ${document.getElementById('fname').value} ${document.getElementById('mname').value} ${document.getElementById('lname').value}\n` +
                 `🎂 Age: ${document.getElementById('age').value} | Sex: ${document.getElementById('gender').value}\n` +
                 `📧 Email: ${document.getElementById('email').value}\n` +
                 `📞 Phone: ${document.getElementById('phone').value}\n` +
+                `🆘 Emergency: ${document.getElementById('ename').value} (${document.getElementById('ephone').value})\n` +
                 `🎡 Result: ${spinResult}\n` +
-                `🆔 ID: ${finalID}\n` +
-                `🏦 Bank: ${document.getElementById('bank-selector').value || "N/A"}`;
+                `📚 Course: ${document.getElementById('course-dropdown').value || "FREE WIN"}\n` +
+                `🏦 Bank: ${document.getElementById('bank-selector').value || "N/A"}\n` +
+                `🆔 ID: ${finalID}`;
 
             await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`);
-            if(type === "Paid") { alert("Order Sent!"); location.reload(); }
+            if(type === 'Final') { alert("Information Sent Successfully!"); location.reload(); }
         }
 
+        const translations = {
+            am: { reg: "👤 የግል መረጃዎን ያስገቡ", next: "ቀጥል ➡️", wheel: "🎡 እድልዎን ይሞክሩ", pay: "የክፍያ አማራጭ ይምረጡ", note: "⚠️ ማሳሰቢያ፡ በፈለጉት የባንክ አማራጭ መጀመሪያ ይክፈሉ እና የክፍያ መለያ ቁጥር (Order ID) ይሰጣችኋል።", final_msg: "ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።" },
+            en: { reg: "👤 Personal Information", next: "NEXT ➡️", wheel: "🎡 Spin Your Luck", pay: "Select Payment Bank", note: "⚠️ Note: Pay first using your preferred bank, then you will receive an Order ID.", final_msg: "Use this ID as a payment reference." },
+            or: { reg: "👤 Odeeffannoo Galchaa", next: "NEXT ➡️", wheel: "🎡 Carraa Yaalaa", pay: "Filannoo Kafaltii", note: "⚠️ Hubachiisa: Jalqaba baankii filattaniin kafalaa, sana booda ID kafaltii ni argattu.", final_msg: "ID kana kafaltiidhaaf akka ragaatti fayyadamaa." },
+            tg: { reg: "👤 ሓበሬታኹም የእትዉ", next: "ቀፅል ➡️", wheel: "🎡 ዕድልኩም ፈትኑ", pay: "ዝርዝር ክፍሊት", note: "⚠️ መተሓሳሰቢ፡ መጀመሪያ ብዝመረፅኩምዎ ባንኪ ክፈሉ፣ ድሕሪኡ መለለዪ ቑፅሪ (ID) ክወሃበኩም እዩ።", final_msg: "ነዚ ID ንክፍሊት ከም መወከሲ ተጠቐሙሉ።" }
+        };
+
         function applyLanguage(l) {
-            const t = {
-                am: { reg: "👤 የግል መረጃዎን ያስገቡ", next: "ቀጥል ➡️", wheel: "🎡 እድልዎን ይሞክሩ" },
-                en: { reg: "👤 Enter Your Info", next: "NEXT ➡️", wheel: "🎡 Spin Your Luck" }
-            }[l] || { reg: "👤 የግል መረጃዎን ያስገቡ", next: "ቀጥል ➡️", wheel: "🎡 እድልዎን ይሞክሩ" };
-            document.getElementById('t-reg').innerText = t.reg;
-            document.getElementById('t-next').innerText = t.next;
-            document.getElementById('t-wheel').innerText = t.wheel;
+            const d = translations[l];
+            document.getElementById('t-reg').innerText = d.reg;
+            document.getElementById('t-next').innerText = d.next;
+            document.getElementById('t-wheel').innerText = d.wheel;
+            document.getElementById('t-pay').innerText = d.pay;
+            document.getElementById('t-pay-note').innerText = d.note;
+            document.getElementById('t-final-msg').innerText = d.final_msg;
         }
     </script>
 </body>
