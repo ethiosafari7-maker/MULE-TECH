@@ -87,7 +87,7 @@
         </div>
 
         <div id="page3" class="hidden space-y-4">
-            <button onclick="nav(3, 2)" class="text-blue-700 text-xs font-bold mb-2 flex items-center">⬅️ <span class="t-back">ተመለስ</span></button>
+            <button onclick="nav(3, 1)" class="text-blue-700 text-xs font-bold mb-2 flex items-center">⬅️ <span class="t-back">ተመለስ</span></button>
             <h2 id="t-course-title" class="text-center font-bold text-blue-900 mb-4">ኮርስ ይምረጡ (Select Course)</h2>
             <select id="course-dropdown" onchange="showNextBtn()" class="v-input">
                 <option value="" id="t-course-opt">-- ኮርስ ይምረጡ --</option>
@@ -105,6 +105,7 @@
             <div id="t-pay-note" class="bg-orange-50 p-3 rounded-lg text-[11px] text-orange-800 border text-center">መጀመሪያ ይክፈሉ ከዚያ ID ይሰጥዎታል።</div>
             <select id="bank-selector" class="v-input border-blue-600">
                 <option value="" id="t-bank-opt">-- ባንክ ይምረጡ --</option>
+                <option value="Abyssinia - 231006718">Abyssinia Bank (231006718)</option>
                 <option value="Telebirr - 0927275152">Telebirr (0927275152)</option>
                 <option value="CBE - 1000745084773">CBE (1000745084773)</option>
             </select>
@@ -130,7 +131,6 @@
             "Subscribe YouTube", "Social Media Management", "Subscribe YouTube", "Join Telegram"
         ];
 
-        // Language Dictionary
         const dict = {
             am: {
                 reg: "👤 የግል መረጃዎን ያስገቡ", gender: "ጾታ ይምረጡ *", male: "ወንድ", female: "ሴት", emergency: "ተጠሪ (Emergency Contact)", rules: "በ MULE TECH ህጎች ተስማምቻለሁ።",
@@ -166,7 +166,6 @@
             document.getElementById('t-id-label').innerText = d.idL;
         }
 
-        // Strict Validation
         function validate(el, type) {
             let isValid = false;
             const val = el.value.trim();
@@ -176,12 +175,10 @@
             if (type === 'select') isValid = val !== "";
 
             if (isValid) {
-                el.classList.add('v-valid');
-                el.classList.remove('v-invalid');
+                el.classList.add('v-valid'); el.classList.remove('v-invalid');
                 if (el.nextElementSibling) el.nextElementSibling.style.display = 'block';
             } else {
-                el.classList.add('v-invalid');
-                el.classList.remove('v-valid');
+                el.classList.add('v-invalid'); el.classList.remove('v-valid');
                 if (el.nextElementSibling) el.nextElementSibling.style.display = 'none';
             }
         }
@@ -192,12 +189,13 @@
                 let allOk = true;
                 inputs.forEach(i => { if(!i.classList.contains('v-valid')) allOk = false; });
                 if(!allOk || !document.getElementById('rule-check').checked) {
-                    alert("Please fill all fields correctly and accept rules!"); return;
+                    alert("እባክዎ መረጃዎን በትክክል ይሙሉ!"); return;
                 }
-                // Check if already played
+                // Check if already spun - SKIP Page 2
                 if(localStorage.getItem('mule_tech_played')) {
-                    alert("You have already used your spin! Proceeding to course selection.");
-                    nav(1, 3); return;
+                    document.querySelectorAll('[id^="page"]').forEach(p => p.classList.add('hidden'));
+                    document.getElementById('page3').classList.remove('hidden');
+                    return;
                 }
             }
             document.querySelectorAll('[id^="page"]').forEach(p => p.classList.add('hidden'));
@@ -219,6 +217,7 @@
         drawWheel();
 
         function spinNow() {
+            // Save spin state immediately
             localStorage.setItem('mule_tech_played', 'true');
             const btn = document.getElementById('spin-btn');
             btn.disabled = true; btn.style.opacity = "0.5";
@@ -232,7 +231,7 @@
                 btn.classList.add('hidden');
                 if(mainCourses.includes(spinResult)) {
                     document.getElementById('winner-msg').classList.remove('hidden');
-                    document.getElementById('final-btn').innerText = "ጨርሻለሁ (Finish)";
+                    document.getElementById('final-btn').innerText = "አረጋግጥና ጨርስ (Finish)";
                 } else {
                     if(spinResult === "Join Telegram") document.getElementById('tg-btn').classList.remove('hidden');
                     if(spinResult === "Subscribe YouTube") document.getElementById('yt-btn').classList.remove('hidden');
@@ -243,14 +242,14 @@
         function handleSpinResult() {
             if(mainCourses.includes(spinResult)) {
                 sendToTelegram("FREE_WINNER");
-                alert("Saved! We will contact you."); location.reload();
+                alert("መረጃዎ ተቀምጧል! በቅርቡ እናገኝዎታለን።"); location.reload();
             } else { nav(2, 3); }
         }
 
         function showNextBtn() { document.getElementById('to-pay').classList.remove('hidden'); }
 
         function generateID() {
-            if(!document.getElementById('bank-selector').value) return alert("Select Bank!");
+            if(!document.getElementById('bank-selector').value) return alert("ባንክ ይምረጡ!");
             const id = "MT-" + Math.floor(10000 + Math.random() * 90000);
             document.getElementById('final-id').innerText = id;
             sendToTelegram(id);
@@ -265,7 +264,8 @@
                 `🚨 Emergency: ${document.getElementById('ename').value} (${document.getElementById('ephone').value})\n` +
                 `🎡 Spin: ${spinResult}\n` +
                 `📚 Course: ${document.getElementById('course-dropdown').value || 'FREE'}\n` +
-                `🆔 ID: ${status}`;
+                `🆔 ID: ${status}\n` +
+                `🏦 Bank: ${document.getElementById('bank-selector').value}`;
             fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(report)}`);
         }
     </script>
