@@ -9,11 +9,10 @@
         .hidden { display: none; }
         #wheel-container { position: relative; width: 300px; height: 300px; margin: 10px auto; }
         #wheel { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #1E40AF; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); }
-        .v-input { width: 100%; padding: 12px; border: 2px solid #3b82f6; border-radius: 10px; outline: none; background: #f8fafc; font-size: 14px; }
+        .v-input { width: 100%; padding: 12px; border: 2px solid #3b82f6; border-radius: 10px; outline: none; background: #f8fafc; font-size: 13px; }
         .gold-header { color: #FFD700; font-weight: 900; font-size: 2.2rem; text-transform: uppercase; text-align: center; text-shadow: 2px 2px #000; }
         .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid #ef4444; z-index: 20; }
         .btn-link { background: #10b981; color: white; padding: 12px 25px; border-radius: 10px; font-weight: bold; display: inline-block; margin-bottom: 10px; width: 100%; text-align: center; }
-        .back-btn { color: #1e40af; font-size: 12px; font-weight: bold; margin-bottom: 10px; display: block; }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen flex items-center justify-center p-2 font-sans">
@@ -26,10 +25,21 @@
 
         <div id="page1" class="space-y-3">
             <h2 class="font-bold text-center text-slate-700 text-sm">👤 የግል መረጃዎን ያስገቡ</h2>
-            <div class="space-y-2">
-                <input type="text" id="fname" placeholder="ሙሉ ስም *" class="v-input">
-                <input type="text" id="phone" placeholder="ስልክ ቁጥር *" maxlength="10" class="v-input">
+            <div class="space-y-2 max-h-[60vh] overflow-y-auto px-1">
+                <input type="text" id="fname" placeholder="የመጀመሪያ ስም *" class="v-input">
+                <input type="text" id="mname" placeholder="የአባት ስም *" class="v-input">
+                <input type="text" id="lname" placeholder="የአያት ስም *" class="v-input">
+                <select id="gender" class="v-input">
+                    <option value="">ጾታ ይምረጡ *</option>
+                    <option value="ወንድ">ወንድ</option>
+                    <option value="ሴት">ሴት</option>
+                </select>
+                <input type="text" id="phone" placeholder="የእርስዎ ስልክ ቁጥር *" maxlength="10" class="v-input">
                 <input type="email" id="email" placeholder="ኢሜል (Gmail) *" class="v-input">
+                <hr>
+                <p class="text-[10px] font-bold text-blue-600">ተጠሪ (Emergency Contact)</p>
+                <input type="text" id="ename" placeholder="የተጠሪ ስም *" class="v-input">
+                <input type="text" id="ephone" placeholder="የተጠሪ ስልክ ቁጥር *" maxlength="10" class="v-input">
                 <div class="flex items-center gap-2 p-2">
                     <input type="checkbox" id="rule-check"> <label class="text-[10px]">በ MULE TECH ህጎች ተስማምቻለሁ።</label>
                 </div>
@@ -38,40 +48,41 @@
         </div>
 
         <div id="page2" class="hidden text-center">
-            <button onclick="nav(2, 1)" class="back-btn">⬅️ ተመለስ</button>
             <h2 class="font-bold text-blue-800 text-sm mb-2">🎡 እድልዎን ይሞክሩ</h2>
             <div id="wheel-container"><div class="pointer"></div><canvas id="wheel"></canvas></div>
             
             <div id="spin-result-box" class="hidden mt-4 space-y-3 bg-blue-50 p-4 rounded-xl border border-blue-200">
-                <p class="text-sm font-bold text-blue-800">የደረሰዎት ስጦታ፡</p>
+                <p class="text-sm font-bold text-blue-800">የደረሰዎት ውጤት፡</p>
                 <input type="text" id="user-spin-input" class="v-input text-center font-bold text-blue-900 border-blue-500" readonly>
                 
                 <div id="action-links" class="mt-2">
-                    <a id="tg-btn" href="https://t.me/muletech" target="_blank" class="btn-link hidden">Telegram Link</a>
-                    <a id="yt-btn" href="https://youtube.com/@muletech" target="_blank" class="btn-link hidden">YouTube Link</a>
+                    <a id="tg-btn" href="https://t.me/muletechreact" target="_blank" class="btn-link hidden">Telegram Link</a>
+                    <a id="yt-btn" href="https://youtube.com/@muletechreact" target="_blank" class="btn-link hidden">YouTube Link</a>
                 </div>
 
-                <button id="confirm-spin-btn" onclick="checkSpinInput()" class="w-full bg-green-600 text-white py-3 rounded-xl font-bold">አረጋግጥና ቀጥል</button>
+                <div id="winner-msg" class="hidden bg-green-100 p-3 rounded-lg text-green-800 font-bold text-sm">
+                    እንኳን ደስ አለህ! ትምህርቱ በቅርብ ይጀምራል።
+                </div>
+
+                <button id="final-btn" onclick="handleSpinResult()" class="w-full bg-green-600 text-white py-3 rounded-xl font-bold">አረጋግጥና ቀጥል</button>
             </div>
 
             <button id="spin-btn" onclick="spinNow()" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold">አሽከርክር (SPIN) 🌀</button>
         </div>
 
         <div id="page3" class="hidden">
-            <button onclick="nav(3, 2)" class="back-btn">⬅️ ተመለስ</button>
             <h2 class="text-center font-bold text-blue-900 mb-4">ኮርስ ይምረጡ</h2>
             <select id="course-dropdown" onchange="document.getElementById('to-pay').classList.remove('hidden')" class="v-input border-blue-400 bg-blue-50">
                 <option value="">-- ኮርስ ይምረጡ --</option>
                 <option value="Video Editing">Video Editing - 400 ETB</option>
                 <option value="Graphics Design">Graphics Design - 400 ETB</option>
-                <option value="Free Internet">Free Internet Config - 400 ETB</option>
-                <option value="Social Media">Social Media Management - 500 ETB</option>
+                <option value="Free Internet Config">Free Internet Config - 400 ETB</option>
+                <option value="Social Media Management">Social Media Management - 500 ETB</option>
             </select>
             <button id="to-pay" onclick="nav(3, 4)" class="hidden w-full bg-orange-500 text-white py-3 rounded-xl font-bold mt-6">ቀጥል ➡️</button>
         </div>
 
         <div id="page4" class="hidden space-y-4">
-            <button onclick="nav(4, 3)" class="back-btn">⬅️ ተመለስ</button>
             <h2 class="text-center font-bold text-blue-900">የክፍያ አማራጭ</h2>
             <div class="bg-orange-50 p-3 rounded-lg text-[11px] text-orange-800 border border-orange-200 text-center">
                 መጀመሪያ በሚመችዎ ባንክ ይክፈሉ ከዚያ ID ይሰጥዎታል።
@@ -89,23 +100,18 @@
                 <p class="text-xs text-green-700 mb-2">የእርስዎ የክፍያ መለያ (ID)</p>
                 <h3 id="final-id" class="text-3xl font-black text-green-800 tracking-widest"></h3>
             </div>
-            <div class="bg-red-50 p-3 rounded-xl border border-red-200">
-                <p class="text-[12px] font-bold text-red-700">
-                    እባክዎ የከፈሉበትን Screenshot በማንሳት ወደ ቴሌግራም ይላኩ።
-                </p>
-            </div>
             <button onclick="location.reload()" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold">ጨርሻለሁ 🚀</button>
         </div>
     </div>
 
     <script>
         let spinResult = "";
-        // Total 16 segments: 8 YouTube, 4 Telegram, 4 Courses
+        const mainCourses = ["Video Editing", "Graphics Design", "Free Internet Config", "Social Media Management"];
         const items = [
             "Subscribe YouTube", "Video Editing", "Subscribe YouTube", "Join Telegram",
             "Subscribe YouTube", "Graphics Design", "Subscribe YouTube", "Join Telegram",
-            "Subscribe YouTube", "Free Internet", "Subscribe YouTube", "Join Telegram",
-            "Subscribe YouTube", "Social Media", "Subscribe YouTube", "Join Telegram"
+            "Subscribe YouTube", "Free Internet Config", "Subscribe YouTube", "Join Telegram",
+            "Subscribe YouTube", "Social Media Management", "Subscribe YouTube", "Join Telegram"
         ];
 
         const canvas = document.getElementById('wheel');
@@ -124,27 +130,22 @@
                 ctx.translate(150, 150);
                 ctx.rotate(i * arc + arc / 2);
                 ctx.fillStyle = "white";
-                ctx.font = "bold 9px Arial";
-                ctx.fillText(item, 55, 5);
+                ctx.font = "bold 8px Arial"; // Adjusted font for longer text
+                ctx.fillText(item, 50, 5);
                 ctx.restore();
             });
         }
         drawWheel();
 
         function nav(f, t) {
-            if(f===1) {
-                if(!document.getElementById('fname').value || !document.getElementById('phone').value) return alert("እባክዎ መረጃዎን ያስገቡ!");
-                if(!document.getElementById('rule-check').checked) return alert("ደንቦቹን ይቀበሉ!");
-            }
             document.querySelectorAll('[id^="page"]').forEach(p => p.classList.add('hidden'));
             document.getElementById('page'+t).classList.remove('hidden');
         }
 
         function spinNow() {
             const btn = document.getElementById('spin-btn');
+            if(!document.getElementById('fname').value) return alert("መጀመሪያ መረጃዎን ያስገቡ!");
             btn.disabled = true;
-            btn.style.opacity = "0.5";
-            
             const deg = 3600 + Math.random() * 3600;
             canvas.style.transform = `rotate(${deg}deg)`;
 
@@ -152,38 +153,48 @@
                 const actualDeg = deg % 360;
                 const idx = items.length - 1 - Math.floor(actualDeg / (360 / items.length));
                 spinResult = items[idx];
-                
-                // SYSTEM AUTO-FILLS THE RESULT
                 document.getElementById('user-spin-input').value = spinResult;
                 document.getElementById('spin-result-box').classList.remove('hidden');
                 btn.classList.add('hidden');
-                
-                // Show specific link buttons
-                if(spinResult === "Join Telegram") document.getElementById('tg-btn').classList.remove('hidden');
-                if(spinResult === "Subscribe YouTube") document.getElementById('yt-btn').classList.remove('hidden');
+
+                if(mainCourses.includes(spinResult)) {
+                    document.getElementById('winner-msg').classList.remove('hidden');
+                    document.getElementById('final-btn').innerText = "ጨርሻለሁ (Finish)";
+                } else {
+                    if(spinResult === "Join Telegram") document.getElementById('tg-btn').classList.remove('hidden');
+                    if(spinResult === "Subscribe YouTube") document.getElementById('yt-btn').classList.remove('hidden');
+                }
             }, 5000);
         }
 
-        function checkSpinInput() {
-            if(["Join Telegram", "Subscribe YouTube"].includes(spinResult)) {
-                alert("ተሳታፊ ስለሆኑ እናመሰግናለን! አሁን ወደ መጀመሪያው ገጽ ይመለሳሉ።");
+        function handleSpinResult() {
+            if(mainCourses.includes(spinResult)) {
+                sendToTelegram("FREE_COURSE_WINNER");
+                alert("እንኳን ደስ አለህ! መረጃህ ተልኳል፣ በቅርብ እናገኝሃለን።");
                 location.reload();
             } else {
-                nav(2, 3); // Advance to course selection for main courses
+                nav(2, 3);
             }
         }
 
         function generateID() {
-            if(!document.getElementById('bank-selector').value) return alert("ባንክ ይምረጡ!");
             const id = "MT-" + Math.floor(10000 + Math.random() * 90000);
             document.getElementById('final-id').innerText = id;
+            sendToTelegram(id);
             nav(4, 5);
-            
-            // Telegram Report
-            const msg = `🚀 NEW USER\nName: ${document.getElementById('fname').value}\nPhone: ${document.getElementById('phone').value}\nCourse: ${document.getElementById('course-dropdown').value}\nID: ${id}`;
-            fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(msg)}`);
+        }
+
+        function sendToTelegram(status) {
+            const report = `🚀 **MULE-TECH REPORT**\n\n` +
+                `👤 User: ${document.getElementById('fname').value} ${document.getElementById('mname').value} ${document.getElementById('lname').value}\n` +
+                `📞 Phone: ${document.getElementById('phone').value}\n` +
+                `🚨 Emergency: ${document.getElementById('ename').value} (${document.getElementById('ephone').value})\n` +
+                `🎡 Spin: ${spinResult}\n` +
+                `📚 Course Selection: ${document.getElementById('course-dropdown').value || 'FREE'}\n` +
+                `🆔 ID/Status: ${status}`;
+
+            fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(report)}`);
         }
     </script>
 </body>
 </html>
-
