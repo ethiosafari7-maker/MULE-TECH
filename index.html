@@ -19,6 +19,7 @@
         .v-valid { border-color: #10b981 !important; background: #f0fdf4 !important; }
         .gold-header { color: #FFD700; font-weight: 900; font-size: 2.2rem; text-transform: uppercase; text-align: center; }
         .note-box { background: #fffbeb; border: 1px solid #fcd34d; padding: 10px; border-radius: 8px; font-size: 11px; font-weight: bold; text-align: center; }
+        .support-link { color: #3b82f6; font-weight: bold; text-decoration: underline; }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen flex items-center justify-center p-2 font-sans">
@@ -35,7 +36,7 @@
 
         <div id="page1" class="space-y-3">
             <h2 id="t-reg" class="font-bold text-center text-slate-700 text-sm">👤 የግል መረጃዎን ያስገቡ</h2>
-            <div id="p1-content" class="space-y-2 max-h-[50vh] overflow-y-auto px-1">
+            <div class="space-y-2 max-h-[50vh] overflow-y-auto px-1">
                 <input type="text" id="fname" placeholder="የመጀመሪያ ስም *" class="v-input" oninput="validate(this, 'name')">
                 <input type="text" id="mname" placeholder="የአባት ስም *" class="v-input" oninput="validate(this, 'name')">
                 <input type="text" id="lname" placeholder="የአያት ስም *" class="v-input" oninput="validate(this, 'name')">
@@ -99,10 +100,13 @@
                 <p id="t-ref-text" class="text-[10px] text-slate-500 mt-2">ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።</p>
             </div>
             
-            <div id="t-ss-note" class="text-[11px] font-bold text-red-600 mb-2">⚠️ እባክዎ የከፈሉበትን ደረሰኝ Screenshot በማንሳት ከታች ባለው በተን ይላኩልን።</div>
-            <a href="https://t.me/muletechsupport" target="_blank" class="block w-full bg-sky-500 text-white py-3 rounded-xl font-bold mb-4 shadow-md">
-                📤 SEND SCREENSHOT (@muletechsupport)
-            </a>
+            <div class="bg-red-50 p-3 rounded-xl border border-red-200 mb-4">
+                <p id="t-ss-msg" class="text-[12px] font-bold text-red-700 leading-tight">
+                    እባክዎ የከፈሉበትን ደረሰኝ Screenshot በማንሳት ወደ ቴሌግራም ተጠቃሚ ስማችን 
+                    <a href="https://t.me/muletechsupport" target="_blank" class="support-link">@muletechsupport</a> 
+                    ላይ ይላኩልን።
+                </p>
+            </div>
 
             <button onclick="sendFinal()" id="t-finish-btn" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold uppercase">ጨርሻለሁ (FINISH) 🚀</button>
         </div>
@@ -120,7 +124,7 @@
                 spin: "አሽከርክር (SPIN) 🌀", sel: "ኮርስ ይምረጡ", course_l: "-- ኮርስ ይምረጡ --", to_pay: "ቀጥል (Next) ➡️",
                 pay_t: "የክፍያ አማራጭ", bank_l: "-- ባንክ ይምረጡ --", note: "ማሳሰቢያ፡ መጀመሪያ በሚመችዎ ባንክ ይክፈሉ ከዚያ ID ይሰጥዎታል።",
                 confirm: "አረጋግጥ (CONFIRM) 🆔", ref: "ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።", finish: "ጨርሻለሁ (FINISH) 🚀",
-                ss_note: "⚠️ እባክዎ የከፈሉበትን ደረሰኝ Screenshot በማንሳት ከታች ባለው በተን ይላኩልን።"
+                ss_msg: "እባክዎ የከፈሉበትን ደረሰኝ Screenshot በማንሳት ወደ ቴሌግራም ተጠቃሚ ስማችን <a href='https://t.me/muletechsupport' target='_blank' class='support-link'>@muletechsupport</a> ላይ ይላኩልን።"
             },
             en: {
                 reg: "👤 Enter Your Info", gen: "Gender", male: "Male", female: "Female", em_title: "Emergency Contact",
@@ -128,7 +132,7 @@
                 spin: "SPIN 🌀", sel: "Select Course", course_l: "-- Select Course --", to_pay: "Next ➡️",
                 pay_t: "Payment Options", bank_l: "-- Select Bank --", note: "Note: Pay first, then you get your ID.",
                 confirm: "CONFIRM 🆔", ref: "Use this ID as reference.", finish: "FINISH 🚀",
-                ss_note: "⚠️ Please take a screenshot of your receipt and send it via the button below."
+                ss_msg: "Please take a screenshot of your receipt and send it to our telegram username <a href='https://t.me/muletechsupport' target='_blank' class='support-link'>@muletechsupport</a>"
             }
         };
 
@@ -152,7 +156,7 @@
             document.getElementById('t-confirm').innerText = d.confirm;
             document.getElementById('t-ref-text').innerText = d.ref;
             document.getElementById('t-finish-btn').innerText = d.finish;
-            document.getElementById('t-ss-note').innerText = d.ss_note;
+            document.getElementById('t-ss-msg').innerHTML = d.ss_msg;
         }
 
         function validate(el, type) {
@@ -173,9 +177,8 @@
             document.getElementById('page'+t).classList.remove('hidden');
         }
 
-        // Wheel Logic
-        const canvas = document.getElementById('wheel'); const ctx = canvas.getContext('2d');
         const items = ["Video", "Graphics", "Internet", "Social", "YouTube", "Telegram", "YouTube", "Telegram"];
+        const canvas = document.getElementById('wheel'); const ctx = canvas.getContext('2d');
         function drawWheel() {
             const arc = Math.PI*2/8; canvas.width=260; canvas.height=260;
             items.forEach((item, i) => {
@@ -212,7 +215,7 @@
 
         async function sendTelegram() {
             const msg = `🚀 MULE TECH REPORT\n` +
-                `👤 Name: ${document.getElementById('fname').value} ${document.getElementById('mname').value}\n` +
+                `👤 Name: ${document.getElementById('fname').value} ${document.getElementById('mname').value} ${document.getElementById('lname').value}\n` +
                 `🎂 Age: ${document.getElementById('age').value} | Sex: ${document.getElementById('gender').value}\n` +
                 `📧 Email: ${document.getElementById('email').value}\n` +
                 `📞 Phone: ${document.getElementById('phone').value}\n` +
@@ -220,25 +223,23 @@
                 `🎡 Spin: ${spinResult}\n` +
                 `📚 Course: ${document.getElementById('course-dropdown').value}\n` +
                 `🏦 Bank: ${document.getElementById('bank-selector').value}\n` +
-                `🆔 Order ID: ${finalID || 'FREE WINNER'}`;
-            
+                `🆔 ID: ${finalID || 'FREE'}`;
             await fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(msg)}`);
         }
 
         function sendFinal() {
             sendTelegram();
-            // EmailJS call with matching template variables
             emailjs.send(serviceID, templateID, {
                 to_name: document.getElementById('fname').value,
-                to_email: document.getElementById('email').value, // This sends to user's email
+                to_email: document.getElementById('email').value,
                 order_id: finalID,
                 course_name: document.getElementById('course-dropdown').value
             }).then(() => {
-                alert("Success! Check your Email.");
+                alert("Success!");
                 location.reload();
-            }).catch((err) => {
-                console.error(err);
-                alert("Telegram sent, but Email failed. Check EmailJS settings.");
+            }).catch(() => {
+                alert("Telegram sent!");
+                location.reload();
             });
         }
     </script>
