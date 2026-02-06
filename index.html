@@ -20,6 +20,7 @@
         .gold-header { color: #FFD700; font-weight: 900; font-size: 2.2rem; text-transform: uppercase; text-align: center; }
         .note-box { background: #fffbeb; border: 1px solid #fcd34d; padding: 10px; border-radius: 8px; font-size: 11px; font-weight: bold; text-align: center; }
         .support-link { color: #3b82f6; font-weight: bold; text-decoration: underline; }
+        .pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 25px solid #ef4444; z-index: 10; }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen flex items-center justify-center p-2 font-sans">
@@ -67,6 +68,13 @@
             </div>
             <h2 id="t-wheel-title" class="font-bold text-blue-800 text-sm mb-2">🎡 እድልዎን ይሞክሩ</h2>
             <div id="wheel-container"><div class="pointer"></div><canvas id="wheel"></canvas></div>
+            
+            <div id="spin-result-box" class="hidden mt-4 space-y-2">
+                <p class="text-xs font-bold text-green-600">እንኳን ደስ አለዎት! ያሸነፉትን ስም በትክክል ከታች ይጻፉ፡</p>
+                <input type="text" id="user-spin-input" placeholder="የወጣለትን ስም እዚህ ይጻፉ..." class="v-input border-green-500">
+                <button onclick="checkSpinInput()" class="w-full bg-green-600 text-white py-2 rounded-lg font-bold">አረጋግጥና ቀጥል</button>
+            </div>
+
             <button id="t-spin-btn" onclick="spinNow()" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold">አሽከርክር (SPIN) 🌀</button>
         </div>
 
@@ -74,7 +82,7 @@
             <div class="flex justify-start mb-2">
                 <button onclick="nav(3, 2)" class="text-blue-700 font-bold text-xs t-back">⬅️ ተመለስ (BACK)</button>
             </div>
-            <h2 id="t-sel-title" class="text-center font-bold text-blue-900 mb-4 text-sm">የሚፈልጉትን ኮርስ ይምረጡ</h2>
+            <h2 id="t-sel-title" class="text-center font-bold text-blue-900 mb-4 text-sm">ኮርስ ይምረጡ</h2>
             <select id="course-dropdown" onchange="showCourse(this.value)" class="v-input border-blue-400 bg-blue-50">
                 <option value="" id="t-course-label">-- ኮርስ ይምረጡ --</option>
                 <option value="Video Editing - 400 ETB">Video Editing - 400 ETB</option>
@@ -109,7 +117,7 @@
             </div>
             <div class="bg-green-50 p-6 rounded-3xl border-2 border-dashed border-green-500 mb-4">
                 <h3 id="final-id-display" class="text-3xl font-mono font-black text-green-800"></h3>
-                <p id="t-ref-text" class="text-[10px] text-slate-500 mt-2 uppercase">ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።</p>
+                <p id="t-ref-text" class="text-[10px] text-slate-500 mt-2">ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።</p>
             </div>
             
             <div class="bg-red-50 p-3 rounded-xl border border-red-200 mb-4">
@@ -133,7 +141,7 @@
             am: {
                 reg: "👤 የግል መረጃዎን ያስገቡ", gen: "ፆታ", male: "ወንድ", female: "ሴት", em_title: "ተጠሪ (Emergency Contact)",
                 rule: "በ MULE TECH ህጎች እና ደንቦች ተስማምቻለሁ።", next: "ቀጥል (NEXT) ➡️", back: "⬅️ ተመለስ (BACK)", wheel: "🎡 እድልዎን ይሞክሩ",
-                spin: "አሽከርክር (SPIN) 🌀", sel: "የሚፈልጉትን ኮርስ ይምረጡ", course_l: "-- ኮርስ ይምረጡ --", to_pay: "ቀጥል (Next) ➡️",
+                spin: "አሽከርክር (SPIN) 🌀", sel: "ኮርስ ይምረጡ", course_l: "-- ኮርስ ይምረጡ --", to_pay: "ቀጥል (Next) ➡️",
                 pay_t: "የክፍያ አማራጭ", bank_l: "-- ባንክ ይምረጡ --", note: "ማሳሰቢያ፡ መጀመሪያ በሚመችዎ ባንክ ይክፈሉ ከዚያ ID ይሰጥዎታል።",
                 confirm: "አረጋግጥ (CONFIRM) 🆔", ref: "ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።", finish: "ጨርሻለሁ (FINISH) 🚀",
                 ss_msg: "እባክዎ የከፈሉበትን ደረሰኝ Screenshot በማንሳት ወደ ቴሌግራም ተጠቃሚ ስማችን <a href='https://t.me/muletechsupport' target='_blank' class='support-link'>@muletechsupport</a> ላይ ይላኩልን።"
@@ -141,7 +149,7 @@
             en: {
                 reg: "👤 Enter Your Info", gen: "Gender", male: "Male", female: "Female", em_title: "Emergency Contact",
                 rule: "I agree to MULE TECH terms.", next: "NEXT ➡️", back: "⬅️ BACK", wheel: "🎡 Spin Your Luck",
-                spin: "SPIN 🌀", sel: "Select Your Course", course_l: "-- Select Course --", to_pay: "Next ➡️",
+                spin: "SPIN 🌀", sel: "Select Course", course_l: "-- Select Course --", to_pay: "Next ➡️",
                 pay_t: "Payment Options", bank_l: "-- Select Bank --", note: "Note: Pay first, then you get your ID.",
                 confirm: "CONFIRM 🆔", ref: "Use this ID as reference.", finish: "FINISH 🚀",
                 ss_msg: "Please take a screenshot of your receipt and send it to our telegram username <a href='https://t.me/muletechsupport' target='_blank' class='support-link'>@muletechsupport</a>"
@@ -183,7 +191,7 @@
 
         function nav(f, t) {
             if(f===1 && t===2) {
-                if(!document.getElementById('fname').classList.contains('v-valid') || !document.getElementById('rule-check').checked) { alert("Please fill all * fields!"); return; }
+                if(!document.getElementById('fname').classList.contains('v-valid') || !document.getElementById('rule-check').checked) { alert("እባክዎ መረጃዎችን በትክክል ይሙሉ!"); return; }
                 if(localStorage.getItem('m_played')) { nav(1, 3); return; }
             }
             document.querySelectorAll('[id^="page"]').forEach(p => p.classList.add('hidden'));
@@ -204,14 +212,32 @@
         drawWheel();
 
         function spinNow() {
-            localStorage.setItem('m_played', 'true');
+            document.getElementById('t-spin-btn').classList.add('hidden');
             const deg = 3000 + Math.random()*3000;
             canvas.style.transform = `rotate(${deg}deg)`;
             setTimeout(() => {
                 const idx = items.length - 1 - Math.floor((deg % 360) / (360/8));
                 spinResult = items[idx];
-                if(idx <= 3) { sendTelegram(); alert("Win: " + spinResult); location.reload(); } else { nav(2, 3); }
+                document.getElementById('spin-result-box').classList.remove('hidden');
+                alert("እንኳን ደስ አለዎት! ያሸነፉት: " + spinResult);
             }, 5000);
+        }
+
+        function checkSpinInput() {
+            const userInput = document.getElementById('user-spin-input').value.trim().toLowerCase();
+            if(userInput === spinResult.toLowerCase()) {
+                localStorage.setItem('m_played', 'true');
+                // If it's a win (top 4 items), send telegram and refresh
+                if(["video", "graphics", "internet", "social"].includes(userInput)) {
+                    sendTelegram();
+                    alert("አሸናፊ መሆንዎን አረጋግጠናል! እናመሰግናለን።");
+                    location.reload();
+                } else {
+                    nav(2, 3);
+                }
+            } else {
+                alert("ያሸነፉትን ስም በትክክል ይጻፉ! (ለምሳሌ: " + spinResult + ")");
+            }
         }
 
         function showCourse(v) { document.getElementById('t-to-pay').classList.toggle('hidden', !v); }
@@ -228,15 +254,13 @@
 
         async function sendTelegram() {
             const msg = `🚀 MULE TECH REPORT\n` +
-                `👤 Name: ${document.getElementById('fname').value} ${document.getElementById('mname').value} ${document.getElementById('lname').value}\n` +
-                `🎂 Age: ${document.getElementById('age').value} | Sex: ${document.getElementById('gender').value}\n` +
+                `👤 Name: ${document.getElementById('fname').value} ${document.getElementById('mname').value}\n` +
                 `📧 Email: ${document.getElementById('email').value}\n` +
                 `📞 Phone: ${document.getElementById('phone').value}\n` +
-                `🆘 Emergency: ${document.getElementById('ename').value} (${document.getElementById('ephone').value})\n` +
                 `🎡 Spin: ${spinResult}\n` +
                 `📚 Course: ${document.getElementById('course-dropdown').value}\n` +
                 `🏦 Bank: ${document.getElementById('bank-selector').value}\n` +
-                `🆔 ID: ${finalID || 'FREE'}`;
+                `🆔 ID: ${finalID || 'WINNER'}`;
             await fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(msg)}`);
         }
 
@@ -248,10 +272,10 @@
                 order_id: finalID,
                 course_name: document.getElementById('course-dropdown').value
             }).then(() => {
-                alert("Success!");
+                alert("መረጃው ተልኳል!");
                 location.reload();
             }).catch(() => {
-                alert("Information Sent!");
+                alert("መረጃው ተልኳል!");
                 location.reload();
             });
         }
