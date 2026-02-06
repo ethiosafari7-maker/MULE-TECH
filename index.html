@@ -15,12 +15,10 @@
         .hidden { display: none; }
         #wheel-container { position: relative; width: 260px; height: 260px; margin: 10px auto; }
         #wheel { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #1E40AF; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); }
-        .pointer { position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 25px; height: 25px; background: #EF4444; clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 20; }
-        .v-input { width: 100%; padding: 10px; border: 2px solid #ef4444; border-radius: 10px; outline: none; background: #fef2f2; font-size: 13px; transition: 0.3s; }
+        .v-input { width: 100%; padding: 10px; border: 2px solid #ef4444; border-radius: 10px; outline: none; background: #fef2f2; font-size: 13px; }
         .v-valid { border-color: #10b981 !important; background: #f0fdf4 !important; }
-        .gold-header { color: #FFD700; font-weight: 900; font-size: 2.2rem; text-transform: uppercase; text-align: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
+        .gold-header { color: #FFD700; font-weight: 900; font-size: 2.2rem; text-transform: uppercase; text-align: center; }
         .note-box { background: #fffbeb; border: 1px solid #fcd34d; padding: 10px; border-radius: 8px; font-size: 11px; font-weight: bold; text-align: center; }
-        #p1-content { max-height: 60vh; overflow-y: auto; }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen flex items-center justify-center p-2 font-sans">
@@ -29,7 +27,7 @@
         
         <div class="text-center mb-3">
             <h1 class="gold-header">MULE TECH</h1>
-            <select id="lang-selector" onchange="applyLanguage(this.value)" class="mt-2 bg-blue-50 text-blue-800 font-bold p-1 rounded text-xs border cursor-pointer outline-none">
+            <select id="lang-selector" onchange="applyLanguage(this.value)" class="mt-2 bg-blue-50 text-blue-800 font-bold p-1 rounded text-xs border outline-none">
                 <option value="am">አማርኛ (Amharic)</option>
                 <option value="en">English</option>
             </select>
@@ -37,45 +35,39 @@
 
         <div id="page1" class="space-y-3">
             <h2 id="t-reg" class="font-bold text-center text-slate-700 text-sm">👤 የግል መረጃዎን ያስገቡ</h2>
-            <div id="p1-content" class="space-y-2 px-1">
+            <div id="p1-content" class="space-y-2 max-h-[50vh] overflow-y-auto px-1">
                 <input type="text" id="fname" placeholder="የመጀመሪያ ስም *" class="v-input" oninput="validate(this, 'name')">
                 <input type="text" id="mname" placeholder="የአባት ስም *" class="v-input" oninput="validate(this, 'name')">
                 <input type="text" id="lname" placeholder="የአያት ስም *" class="v-input" oninput="validate(this, 'name')">
                 <div class="flex gap-2">
-                    <input type="number" id="age" placeholder="እድሜ (15-50)" class="v-input w-1/3" oninput="validate(this, 'age')">
+                    <input type="number" id="age" placeholder="እድሜ" class="v-input w-1/3" oninput="validate(this, 'age')">
                     <select id="gender" class="v-input w-2/3 bg-white" onchange="this.classList.add('v-valid')">
                         <option value="" id="t-gen-label">ፆታ</option>
                         <option value="Male" id="t-male">ወንድ</option>
                         <option value="Female" id="t-female">ሴት</option>
                     </select>
                 </div>
-                <input type="email" id="email" placeholder="ኢሜል (example@gmail.com) *" class="v-input" oninput="validate(this, 'email')">
-                <input type="text" id="phone" placeholder="ስልክ ቁጥር (09.../07...) *" maxlength="10" class="v-input" oninput="validate(this, 'phone')">
+                <input type="email" id="email" placeholder="ኢሜል *" class="v-input" oninput="validate(this, 'email')">
+                <input type="text" id="phone" placeholder="ስልክ ቁጥር *" maxlength="10" class="v-input" oninput="validate(this, 'phone')">
                 <p id="t-em-title" class="text-[9px] font-bold text-blue-600 uppercase pt-2">ተጠሪ (Emergency Contact)</p>
                 <input type="text" id="ename" placeholder="የተጠሪ ስም *" class="v-input" oninput="validate(this, 'name')">
                 <input type="text" id="ephone" placeholder="የተጠሪ ስልክ *" maxlength="10" class="v-input" oninput="validate(this, 'phone')">
                 <div class="flex items-center gap-2 p-2 border rounded mt-2">
-                    <input type="checkbox" id="rule-check" class="w-4 h-4"> 
-                    <label id="t-rule" class="text-[10px] cursor-pointer">በ MULE TECH ህጎች እና ደንቦች ተስማምቻለሁ።</label>
+                    <input type="checkbox" id="rule-check"> 
+                    <label id="t-rule" class="text-[10px]">በ MULE TECH ህጎች እና ደንቦች ተስማምቻለሁ።</label>
                 </div>
             </div>
-            <button onclick="nav(1, 2)" id="t-next" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold hover:bg-blue-800 transition">ቀጥል (NEXT) ➡️</button>
+            <button onclick="nav(1, 2)" id="t-next" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold">ቀጥል (NEXT) ➡️</button>
         </div>
 
         <div id="page2" class="hidden text-center">
-            <div class="flex justify-between mb-2">
-                <button onclick="nav(2, 1)" class="text-blue-700 font-bold text-xs t-back">⬅️ ተመለስ</button>
-            </div>
-            <h2 id="t-wheel-title" class="font-bold text-blue-800 text-sm">🎡 እድልዎን ይሞክሩ</h2>
+            <h2 id="t-wheel-title" class="font-bold text-blue-800 text-sm mb-2">🎡 እድልዎን ይሞክሩ</h2>
             <div id="wheel-container"><div class="pointer"></div><canvas id="wheel"></canvas></div>
-            <button id="t-spin-btn" onclick="spinNow()" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold shadow-lg">አሽከርክር (SPIN) 🌀</button>
+            <button id="t-spin-btn" onclick="spinNow()" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold">አሽከርክር (SPIN) 🌀</button>
         </div>
 
         <div id="page3" class="hidden">
-            <div class="flex justify-between mb-3">
-                <button onclick="nav(3, 2)" id="t-back-wheel" class="text-blue-700 font-bold text-xs t-back">⬅️ ተመለስ</button>
-            </div>
-            <h2 id="t-sel-title" class="text-center font-bold text-blue-900 mb-4 text-sm">የሚፈልጉትን ኮርስ ይምረጡ</h2>
+            <h2 id="t-sel-title" class="text-center font-bold text-blue-900 mb-4">ኮርስ ይምረጡ</h2>
             <select id="course-dropdown" onchange="showCourse(this.value)" class="v-input border-blue-400 bg-blue-50">
                 <option value="" id="t-course-label">-- ኮርስ ይምረጡ --</option>
                 <option value="Video Editing - 400 ETB">Video Editing - 400 ETB</option>
@@ -83,84 +75,72 @@
                 <option value="Free Internet Config - 400 ETB">Free Internet Config - 400 ETB</option>
                 <option value="Social Media Management - 500 ETB">Social Media Management - 500 ETB</option>
             </select>
-            <button id="t-to-pay" onclick="nav(3, 4)" class="hidden w-full bg-orange-500 text-white py-3 rounded-xl font-bold mt-6">ወደ ክፍያ ሂድ (Next) ➡️</button>
+            <button id="t-to-pay" onclick="nav(3, 4)" class="hidden w-full bg-orange-500 text-white py-3 rounded-xl font-bold mt-6">ቀጥል (Next) ➡️</button>
         </div>
 
         <div id="page4" class="hidden">
-            <div class="flex justify-between mb-3">
-                <button onclick="nav(4, 3)" class="text-blue-700 font-bold text-xs t-back">⬅️ ተመለስ</button>
-            </div>
             <h2 id="t-pay-title" class="text-center font-bold text-blue-900 mb-4">የክፍያ አማራጭ</h2>
-            <div id="t-pay-note" class="note-box mb-6 text-orange-700">
-                ማሳሰቢያ፡ መጀመሪያ በሚመችዎ ባንክ ይክፈሉ ከዚያ የክፍያ መለያ ቁጥር (ID) ይሰጥዎታል።
-            </div>
+            <div id="t-pay-note" class="note-box mb-6 text-orange-700">ማሳሰቢያ፡ መጀመሪያ በሚመችዎ ባንክ ይክፈሉ ከዚያ ID ይሰጥዎታል።</div>
             <select id="bank-selector" class="v-input border-blue-600 bg-white mb-6">
                 <option value="" id="t-bank-label">-- ባንክ ይምረጡ --</option>
                 <option value="Telebirr - 0927275152">Telebirr (0927275152)</option>
                 <option value="CBE - 1000745084773">CBE (1000745084773)</option>
                 <option value="Abyssinia - 231006718">Abyssinia (231006718)</option>
             </select>
-            <button onclick="generateFinalID()" id="t-confirm" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold shadow-md">አረጋግጥ (CONFIRM) 🆔</button>
+            <button onclick="generateFinalID()" id="t-confirm" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold">አረጋግጥ (CONFIRM) 🆔</button>
         </div>
 
         <div id="page5" class="hidden text-center">
-            <div class="flex justify-between mb-3">
-                <button onclick="nav(5, 4)" class="text-blue-700 font-bold text-xs t-back">⬅️ ተመለስ</button>
+            <div class="note-box bg-blue-50 border-blue-200 text-blue-800 mb-4 py-4">
+                <p id="t-welcome-msg"></p>
             </div>
-            <div class="note-box bg-blue-50 border-blue-200 text-blue-800 mb-6 py-5 px-3">
-                <p id="t-welcome-msg" class="leading-relaxed"></p>
-            </div>
-            <div class="bg-green-50 p-6 rounded-3xl border-2 border-dashed border-green-500">
+            <div class="bg-green-50 p-6 rounded-3xl border-2 border-dashed border-green-500 mb-4">
                 <h3 id="final-id-display" class="text-3xl font-mono font-black text-green-800"></h3>
-                <p id="t-ref-text" class="text-[10px] text-slate-500 mt-2 uppercase">ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።</p>
+                <p id="t-ref-text" class="text-[10px] text-slate-500 mt-2">ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።</p>
             </div>
-            <button onclick="sendFinal()" id="t-finish-btn" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold mt-8 shadow-lg hover:bg-green-700 transition">ጨርሻለሁ (FINISH) 🚀</button>
+            
+            <div id="t-ss-note" class="text-[11px] font-bold text-red-600 mb-2">⚠️ እባክዎ የከፈሉበትን ደረሰኝ Screenshot በማንሳት ከታች ባለው በተን ይላኩልን።</div>
+            <a href="https://t.me/muletechsupport" target="_blank" class="block w-full bg-sky-500 text-white py-3 rounded-xl font-bold mb-4 shadow-md">
+                📤 SEND SCREENSHOT (@muletechsupport)
+            </a>
+
+            <button onclick="sendFinal()" id="t-finish-btn" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold uppercase">ጨርሻለሁ (FINISH) 🚀</button>
         </div>
     </div>
 
     <script>
         const serviceID = "service_z2j61lk";
         const templateID = "template_4218t7u";
+        let finalID = ""; let spinResult = "";
 
         const translations = {
             am: {
-                reg: "👤 የግል መረጃዎን ያስገቡ", fname: "የመጀመሪያ ስም *", mname: "የአባት ስም *", lname: "የአያት ስም *",
-                age: "እድሜ (15-50)", gen: "ፆታ", male: "ወንድ", female: "ሴት", email: "ኢሜል (example@gmail.com) *",
-                phone: "ስልክ (09/07...) *", em_title: "ተጠሪ (Emergency Contact)", ename: "የተጠሪ ስም *", ephone: "የተጠሪ ስልክ *",
-                rule: "በ MULE TECH ህጎች እና ደንቦች ተስማምቻለሁ።", next: "ቀጥል (NEXT) ➡️", back: "⬅️ ተመለስ", wheel: "🎡 እድልዎን ይሞክሩ",
-                spin: "አሽከርክር (SPIN) 🌀", sel: "የሚፈልጉትን ኮርስ ይምረጡ", course_l: "-- ኮርስ ይምረጡ --", to_pay: "ወደ ክፍያ ሂድ (Next) ➡️",
-                pay_t: "የክፍያ አማራጭ", bank_l: "-- ባንክ ይምረጡ --", note: "ማሳሰቢያ፡ መጀመሪያ በሚመችዎ ባንክ ይክፈሉ ከዚያ የክፍያ መለያ ቁጥር (ID) ይሰጥዎታል።",
-                confirm: "አረጋግጥ (CONFIRM) 🆔", ref: "ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።", finish: "ጨርሻለሁ (FINISH) 🚀"
+                reg: "👤 የግል መረጃዎን ያስገቡ", gen: "ፆታ", male: "ወንድ", female: "ሴት", em_title: "ተጠሪ (Emergency Contact)",
+                rule: "በ MULE TECH ህጎች እና ደንቦች ተስማምቻለሁ።", next: "ቀጥል (NEXT) ➡️", wheel: "🎡 እድልዎን ይሞክሩ",
+                spin: "አሽከርክር (SPIN) 🌀", sel: "ኮርስ ይምረጡ", course_l: "-- ኮርስ ይምረጡ --", to_pay: "ቀጥል (Next) ➡️",
+                pay_t: "የክፍያ አማራጭ", bank_l: "-- ባንክ ይምረጡ --", note: "ማሳሰቢያ፡ መጀመሪያ በሚመችዎ ባንክ ይክፈሉ ከዚያ ID ይሰጥዎታል።",
+                confirm: "አረጋግጥ (CONFIRM) 🆔", ref: "ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።", finish: "ጨርሻለሁ (FINISH) 🚀",
+                ss_note: "⚠️ እባክዎ የከፈሉበትን ደረሰኝ Screenshot በማንሳት ከታች ባለው በተን ይላኩልን።"
             },
             en: {
-                reg: "👤 Personal Information", fname: "First Name *", mname: "Father Name *", lname: "Grandfather Name *",
-                age: "Age (15-50)", gen: "Gender", male: "Male", female: "Female", email: "Email (example@gmail.com) *",
-                phone: "Phone (09/07...) *", em_title: "Emergency Contact", ename: "Contact Name *", ephone: "Contact Phone *",
-                rule: "I agree to MULE TECH terms and conditions.", next: "NEXT ➡️", back: "⬅️ BACK", wheel: "🎡 Spin Your Luck",
-                spin: "SPIN 🌀", sel: "Select Your Course", course_l: "-- Select Course --", to_pay: "Proceed to Payment ➡️",
-                pay_t: "Payment Options", bank_l: "-- Select Bank --", note: "Note: Pay first using your preferred bank, then you will receive an Order ID.",
-                confirm: "CONFIRM 🆔", ref: "Use this ID as payment reference.", finish: "FINISH 🚀"
+                reg: "👤 Enter Your Info", gen: "Gender", male: "Male", female: "Female", em_title: "Emergency Contact",
+                rule: "I agree to MULE TECH terms.", next: "NEXT ➡️", wheel: "🎡 Spin Your Luck",
+                spin: "SPIN 🌀", sel: "Select Course", course_l: "-- Select Course --", to_pay: "Next ➡️",
+                pay_t: "Payment Options", bank_l: "-- Select Bank --", note: "Note: Pay first, then you get your ID.",
+                confirm: "CONFIRM 🆔", ref: "Use this ID as reference.", finish: "FINISH 🚀",
+                ss_note: "⚠️ Please take a screenshot of your receipt and send it via the button below."
             }
         };
 
-        function applyLanguage(lang) {
-            const d = translations[lang];
+        function applyLanguage(l) {
+            const d = translations[l];
             document.getElementById('t-reg').innerText = d.reg;
-            document.getElementById('fname').placeholder = d.fname;
-            document.getElementById('mname').placeholder = d.mname;
-            document.getElementById('lname').placeholder = d.lname;
-            document.getElementById('age').placeholder = d.age;
             document.getElementById('t-gen-label').innerText = d.gen;
             document.getElementById('t-male').innerText = d.male;
             document.getElementById('t-female').innerText = d.female;
-            document.getElementById('email').placeholder = d.email;
-            document.getElementById('phone').placeholder = d.phone;
             document.getElementById('t-em-title').innerText = d.em_title;
-            document.getElementById('ename').placeholder = d.ename;
-            document.getElementById('ephone').placeholder = d.ephone;
             document.getElementById('t-rule').innerText = d.rule;
             document.getElementById('t-next').innerText = d.next;
-            document.querySelectorAll('.t-back').forEach(b => b.innerText = d.back);
             document.getElementById('t-wheel-title').innerText = d.wheel;
             document.getElementById('t-spin-btn').innerText = d.spin;
             document.getElementById('t-sel-title').innerText = d.sel;
@@ -172,88 +152,94 @@
             document.getElementById('t-confirm').innerText = d.confirm;
             document.getElementById('t-ref-text').innerText = d.ref;
             document.getElementById('t-finish-btn').innerText = d.finish;
+            document.getElementById('t-ss-note').innerText = d.ss_note;
         }
 
         function validate(el, type) {
             let v = false; const val = el.value.trim();
             if(type==='name') v = val.length >= 3;
-            if(type==='email') v = val.toLowerCase().endsWith('@gmail.com') && val.length > 10;
-            if(type==='phone') v = val.length === 10 && (val.startsWith('09') || val.startsWith('07'));
-            if(type==='age') v = parseInt(val) >= 15 && parseInt(val) <= 50;
+            if(type==='email') v = val.toLowerCase().endsWith('@gmail.com');
+            if(type==='phone') v = val.length === 10;
+            if(type==='age') v = parseInt(val) >= 15;
             el.classList.toggle('v-valid', v);
         }
 
         function nav(f, t) {
             if(f===1 && t===2) {
-                const inputs = document.querySelectorAll('#page1 .v-input');
-                let ok = true;
-                inputs.forEach(i => { if(!i.classList.contains('v-valid') && i.id !== 'gender') { i.style.borderColor="red"; ok=false; }});
-                if(!ok || !document.getElementById('rule-check').checked) { alert("Please complete the form correctly!"); return; }
+                if(!document.getElementById('fname').classList.contains('v-valid') || !document.getElementById('rule-check').checked) { alert("Please fill all * fields!"); return; }
                 if(localStorage.getItem('m_played')) { nav(1, 3); return; }
             }
             document.querySelectorAll('[id^="page"]').forEach(p => p.classList.add('hidden'));
             document.getElementById('page'+t).classList.remove('hidden');
         }
 
-        const items = ["Video Editing", "Graphics Design", "Free Internet", "Social Management", "Subscribe YouTube", "Join Telegram", "Subscribe YouTube", "Join Telegram"];
+        // Wheel Logic
         const canvas = document.getElementById('wheel'); const ctx = canvas.getContext('2d');
+        const items = ["Video", "Graphics", "Internet", "Social", "YouTube", "Telegram", "YouTube", "Telegram"];
         function drawWheel() {
-            const arc = (Math.PI*2)/8; canvas.width=260; canvas.height=260;
+            const arc = Math.PI*2/8; canvas.width=260; canvas.height=260;
             items.forEach((item, i) => {
                 ctx.beginPath(); ctx.fillStyle = i%2==0 ? '#1E40AF' : '#3B82F6';
                 ctx.moveTo(130,130); ctx.arc(130,130,125, i*arc, (i+1)*arc); ctx.fill();
                 ctx.save(); ctx.translate(130,130); ctx.rotate(i*arc+arc/2);
-                ctx.fillStyle="white"; ctx.font="bold 9px Arial"; ctx.fillText(item, 50, 5); ctx.restore();
+                ctx.fillStyle="white"; ctx.font="bold 10px Arial"; ctx.fillText(item, 50, 5); ctx.restore();
             });
         }
         drawWheel();
 
-        let spinResult = "";
         function spinNow() {
             localStorage.setItem('m_played', 'true');
-            const deg = Math.floor(3000 + Math.random()*3000);
+            const deg = 3000 + Math.random()*3000;
             canvas.style.transform = `rotate(${deg}deg)`;
-            document.getElementById('t-spin-btn').disabled = true;
             setTimeout(() => {
                 const idx = items.length - 1 - Math.floor((deg % 360) / (360/8));
                 spinResult = items[idx];
-                if(idx <= 3) { sendTelegram(); document.getElementById('page2').classList.add('hidden'); alert("Winner: " + spinResult); location.reload(); }
-                else { nav(2, 3); }
+                if(idx <= 3) { sendTelegram(); alert("Win: " + spinResult); location.reload(); } else { nav(2, 3); }
             }, 5000);
         }
 
         function showCourse(v) { document.getElementById('t-to-pay').classList.toggle('hidden', !v); }
 
-        let finalID = "";
         function generateFinalID() {
             if(!document.getElementById('bank-selector').value) return;
             finalID = "MULE-" + Math.floor(10000 + Math.random()*89999);
             document.getElementById('final-id-display').innerText = finalID;
-            const name = document.getElementById('fname').value;
             const lang = document.getElementById('lang-selector').value;
-            if(lang === 'am') {
-                document.getElementById('t-welcome-msg').innerText = `ሰላም ${name}፣ ወደ MULE TECH እንኳን ደህና መጡ! የእርስዎ መለያ ቁጥር ${finalID} ነው። እባክዎ ክፍያውን ፈጽመው ደረሰኝ እዚህ ይላኩ።`;
-            } else {
-                document.getElementById('t-welcome-msg').innerText = `Hello ${name}, welcome to MULE TECH! Your Order ID is ${finalID}. Please complete your payment and send your receipt here.`;
-            }
+            const name = document.getElementById('fname').value;
+            document.getElementById('t-welcome-msg').innerText = (lang==='am') ? `ሰላም ${name}፣ የእርስዎ ID ${finalID} ነው።` : `Hello ${name}, your ID is ${finalID}.`;
             nav(4, 5);
         }
 
         async function sendTelegram() {
-            const msg = `🚀 NEW ORDER\nName: ${document.getElementById('fname').value}\nPhone: ${document.getElementById('phone').value}\nResult: ${spinResult}\nCourse: ${document.getElementById('course-dropdown').value}\nBank: ${document.getElementById('bank-selector').value}\nID: ${finalID || 'FREE'}`;
+            const msg = `🚀 MULE TECH REPORT\n` +
+                `👤 Name: ${document.getElementById('fname').value} ${document.getElementById('mname').value}\n` +
+                `🎂 Age: ${document.getElementById('age').value} | Sex: ${document.getElementById('gender').value}\n` +
+                `📧 Email: ${document.getElementById('email').value}\n` +
+                `📞 Phone: ${document.getElementById('phone').value}\n` +
+                `🆘 Emergency: ${document.getElementById('ename').value} (${document.getElementById('ephone').value})\n` +
+                `🎡 Spin: ${spinResult}\n` +
+                `📚 Course: ${document.getElementById('course-dropdown').value}\n` +
+                `🏦 Bank: ${document.getElementById('bank-selector').value}\n` +
+                `🆔 Order ID: ${finalID || 'FREE WINNER'}`;
+            
             await fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(msg)}`);
         }
 
-        async function sendFinal() {
-            await sendTelegram();
+        function sendFinal() {
+            sendTelegram();
+            // EmailJS call with matching template variables
             emailjs.send(serviceID, templateID, {
                 to_name: document.getElementById('fname').value,
-                to_email: document.getElementById('email').value,
+                to_email: document.getElementById('email').value, // This sends to user's email
                 order_id: finalID,
                 course_name: document.getElementById('course-dropdown').value
+            }).then(() => {
+                alert("Success! Check your Email.");
+                location.reload();
+            }).catch((err) => {
+                console.error(err);
+                alert("Telegram sent, but Email failed. Check EmailJS settings.");
             });
-            alert("Information Sent! / መረጃው ተልኳል!");
-            location.reload();
         }
     </script>
 </body>
