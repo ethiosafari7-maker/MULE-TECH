@@ -77,7 +77,7 @@
                 </div>
 
                 <div id="winner-msg" class="hidden bg-green-100 p-3 rounded-lg text-green-800 font-bold text-xs">
-                    እንኳን ደስ አለህ! ትምህርቱ በቅርብ ይጀምራል። (Congratulations! Class starts soon.)
+                    እንኳን ደስ አለህ! ትምህርቱ በቅርብ ይጀምራል።
                 </div>
 
                 <button id="final-btn" onclick="handleSpinResult()" class="w-full bg-green-600 text-white py-3 rounded-xl font-bold t-confirm">አረጋግጥና ቀጥል</button>
@@ -183,6 +183,7 @@
             }
         }
 
+        // የተስተካከለው የገፅ ዝውውር (Navigation)
         function nav(f, t) {
             if (f === 1) {
                 const inputs = document.querySelectorAll('#page1 .v-input');
@@ -191,7 +192,8 @@
                 if(!allOk || !document.getElementById('rule-check').checked) {
                     alert("እባክዎ መረጃዎን በትክክል ይሙሉ!"); return;
                 }
-                // Check if already spun - SKIP Page 2
+                
+                // Wheel ከተሽከረከረ መልዕክት ሳይናገር በቀጥታ ገፅ 3 ይሂድ
                 if(localStorage.getItem('mule_tech_played')) {
                     document.querySelectorAll('[id^="page"]').forEach(p => p.classList.add('hidden'));
                     document.getElementById('page3').classList.remove('hidden');
@@ -217,7 +219,6 @@
         drawWheel();
 
         function spinNow() {
-            // Save spin state immediately
             localStorage.setItem('mule_tech_played', 'true');
             const btn = document.getElementById('spin-btn');
             btn.disabled = true; btn.style.opacity = "0.5";
@@ -242,7 +243,7 @@
         function handleSpinResult() {
             if(mainCourses.includes(spinResult)) {
                 sendToTelegram("FREE_WINNER");
-                alert("መረጃዎ ተቀምጧል! በቅርቡ እናገኝዎታለን።"); location.reload();
+                alert("መረጃዎ ተቀምጧል!"); location.reload();
             } else { nav(2, 3); }
         }
 
@@ -261,7 +262,6 @@
                 `👤 Name: ${document.getElementById('fname').value} ${document.getElementById('mname').value} ${document.getElementById('lname').value}\n` +
                 `📞 Phone: ${document.getElementById('phone').value}\n` +
                 `📧 Email: ${document.getElementById('email').value}\n` +
-                `🚨 Emergency: ${document.getElementById('ename').value} (${document.getElementById('ephone').value})\n` +
                 `🎡 Spin: ${spinResult}\n` +
                 `📚 Course: ${document.getElementById('course-dropdown').value || 'FREE'}\n` +
                 `🆔 ID: ${status}\n` +
