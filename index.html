@@ -10,7 +10,9 @@
         #wheel-container { position: relative; width: 300px; height: 300px; margin: 10px auto; }
         #wheel { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #1E40AF; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); }
         .v-container { position: relative; width: 100%; }
+        /* መጀመሪያ ላይ ቀይ ሬክታንግል እንዲሆን */
         .v-input { width: 100%; padding: 12px; border: 2px solid #ef4444; border-radius: 10px; outline: none; background: #fff; font-size: 13px; transition: 0.3s; }
+        /* ሲሟላ አረንጓዴ እንዲሆን */
         .v-valid { border: 2px solid #10b981 !important; }
         .check-mark { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #10b981; display: none; font-weight: bold; }
         .gold-header { color: #FFD700; font-weight: 900; font-size: 2.2rem; text-transform: uppercase; text-align: center; text-shadow: 2px 2px #000; }
@@ -36,22 +38,43 @@
         <div id="page1" class="space-y-3">
             <h2 id="t-reg-title" class="font-bold text-center text-slate-700 text-sm">👤 የግል መረጃዎን ያስገቡ</h2>
             <div class="space-y-3 max-h-[55vh] overflow-y-auto px-1">
-                <div class="v-container"><input type="text" id="fname" placeholder="የመጀመሪያ ስም *" class="v-input" oninput="validate(this, 'name')"><span class="check-mark">✅</span></div>
-                <div class="v-container"><input type="text" id="mname" placeholder="የአባት ስም *" class="v-input" oninput="validate(this, 'name')"><span class="check-mark">✅</span></div>
-                <div class="v-container"><input type="text" id="lname" placeholder="የአያት ስም *" class="v-input" oninput="validate(this, 'name')"><span class="check-mark">✅</span></div>
+                <div class="v-container">
+                    <input type="text" id="fname" placeholder="የመጀመሪያ ስም *" class="v-input" oninput="validate(this, 'name')">
+                    <span class="check-mark">✅</span>
+                </div>
+                <div class="v-container">
+                    <input type="text" id="mname" placeholder="የአባት ስም *" class="v-input" oninput="validate(this, 'name')">
+                    <span class="check-mark">✅</span>
+                </div>
+                <div class="v-container">
+                    <input type="text" id="lname" placeholder="የአያት ስም *" class="v-input" oninput="validate(this, 'name')">
+                    <span class="check-mark">✅</span>
+                </div>
                 
-                <select id="gender" class="v-input" onchange="validate(this, 'select')">
+                <select id="gender" class="v-input !border-slate-300" onchange="validate(this, 'select')">
                     <option value="" id="t-gender-opt">ጾታ ይምረጡ *</option>
                     <option value="ወንድ" id="t-male">ወንድ</option>
                     <option value="ሴት" id="t-female">ሴት</option>
                 </select>
 
-                <div class="v-container"><input type="text" id="phone" placeholder="የእርስዎ ስልክ (09/07...) *" maxlength="10" class="v-input" oninput="validate(this, 'phone')"><span class="check-mark">✅</span></div>
-                <div class="v-container"><input type="email" id="email" placeholder="Email (example@gmail.com) *" class="v-input" oninput="validate(this, 'email')"><span class="check-mark">✅</span></div>
+                <div class="v-container">
+                    <input type="text" id="phone" placeholder="የእርስዎ ስልክ (09/07...) *" maxlength="10" class="v-input" oninput="validate(this, 'phone')">
+                    <span class="check-mark">✅</span>
+                </div>
+                <div class="v-container">
+                    <input type="email" id="email" placeholder="Email (example@gmail.com) *" class="v-input" oninput="validate(this, 'email')">
+                    <span class="check-mark">✅</span>
+                </div>
                 
                 <p id="t-emergency" class="text-[10px] font-bold text-blue-600">ተጠሪ (Emergency Contact)</p>
-                <div class="v-container"><input type="text" id="ename" placeholder="የተጠሪ ስም *" class="v-input" oninput="validate(this, 'name')"><span class="check-mark">✅</span></div>
-                <div class="v-container"><input type="text" id="ephone" placeholder="የተጠሪ ስልክ (09/07...) *" maxlength="10" class="v-input" oninput="validate(this, 'phone')"><span class="check-mark">✅</span></div>
+                <div class="v-container">
+                    <input type="text" id="ename" placeholder="የተጠሪ ስም *" class="v-input" oninput="validate(this, 'name')">
+                    <span class="check-mark">✅</span>
+                </div>
+                <div class="v-container">
+                    <input type="text" id="ephone" placeholder="የተጠሪ ስልክ (09/07...) *" maxlength="10" class="v-input" oninput="validate(this, 'phone')">
+                    <span class="check-mark">✅</span>
+                </div>
                 
                 <div class="flex items-center gap-2 p-2">
                     <input type="checkbox" id="rule-check"> <label id="t-rules" class="text-[10px]">በ MULE TECH ህጎች ተስማምቻለሁ።</label>
@@ -169,16 +192,21 @@
             let isValid = false;
             const val = el.value.trim();
             if (type === 'name') isValid = val.length >= 3;
+            // 09 ወይም 07 መጀመሩን እና 10 መሆኑን ማረጋገጥ
             if (type === 'phone') isValid = /^(09|07)[0-9]{8}$/.test(val);
-            if (type === 'email') isValid = val.includes('@') && val.length > 5;
+            if (type === 'email') isValid = /^[^\s@]+@gmail\.com$/.test(val);
             if (type === 'select') isValid = val !== "";
 
             if (isValid) {
                 el.classList.add('v-valid');
-                if (el.nextElementSibling) el.nextElementSibling.style.display = 'block';
+                if (el.nextElementSibling && el.nextElementSibling.classList.contains('check-mark')) {
+                    el.nextElementSibling.style.display = 'block';
+                }
             } else {
                 el.classList.remove('v-valid');
-                if (el.nextElementSibling) el.nextElementSibling.style.display = 'none';
+                if (el.nextElementSibling && el.nextElementSibling.classList.contains('check-mark')) {
+                    el.nextElementSibling.style.display = 'none';
+                }
             }
         }
 
@@ -188,11 +216,9 @@
                 let allOk = true;
                 inputs.forEach(i => { if(!i.classList.contains('v-valid')) allOk = false; });
                 if(!allOk || !document.getElementById('rule-check').checked) {
-                    alert("እባክዎ መረጃዎን በትክክል ይሙሉ!"); return;
+                    alert("እባክዎ መረጃዎን በትክክል ይሙሉ እና በህጎቹ ይስማሙ!"); return;
                 }
-                if(localStorage.getItem('mule_tech_played')) {
-                    t = 3; 
-                }
+                if(localStorage.getItem('mule_tech_played')) { t = 3; }
             }
             document.querySelectorAll('[id^="page"]').forEach(p => p.classList.add('hidden'));
             document.getElementById('page'+t).classList.remove('hidden');
@@ -226,6 +252,9 @@
                 btn.classList.add('hidden');
                 if(spinResult.includes("Telegram")) document.getElementById('tg-btn').classList.remove('hidden');
                 if(spinResult.includes("YouTube")) document.getElementById('yt-btn').classList.remove('hidden');
+                
+                // ሪፖርት ወደ ቴሌግራም መላክ
+                sendToTelegram("SPIN_ONLY");
             }, 5000);
         }
 
@@ -241,14 +270,22 @@
         }
 
         function sendToTelegram(status) {
-            const report = `🚀 **MULE-TECH REPORT**\n` +
-                `👤 Name: ${document.getElementById('fname').value} ${document.getElementById('lname').value}\n` +
-                `📞 Phone: ${document.getElementById('phone').value}\n` +
+            const name = `${document.getElementById('fname').value} ${document.getElementById('mname').value} ${document.getElementById('lname').value}`;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const course = document.getElementById('course-dropdown').value || "Not Selected";
+            const bank = document.getElementById('bank-selector').value || "Not Selected";
+
+            const report = `🚀 **MULE-TECH NEW REPORT**\n\n` +
+                `👤 Name: ${name}\n` +
+                `📧 Email: ${email}\n` +
+                `📞 Phone: ${phone}\n` +
                 `🎡 Spin: ${spinResult}\n` +
-                `📚 Course: ${document.getElementById('course-dropdown').value}\n` +
-                `🆔 ID: ${status}\n` +
-                `🏦 Bank: ${document.getElementById('bank-selector').value}`;
-            fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(report)}`);
+                `📚 Course: ${course}\n` +
+                `🏦 Bank: ${bank}\n` +
+                `🆔 ID/Status: ${status}`;
+
+            fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(report)}&parse_mode=Markdown`);
         }
     </script>
 </body>
