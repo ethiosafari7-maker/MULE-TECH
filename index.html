@@ -8,7 +8,6 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
-            // ያንተ Public Key እዚህ ገብቷል
             emailjs.init("Ny-PiYLDtBDV_q8An"); 
         })();
     </script>
@@ -79,10 +78,10 @@
             <h2 id="t-sel-title" class="text-center font-bold text-blue-900 mb-4 text-sm">የሚፈልጉትን ኮርስ ይምረጡ</h2>
             <select id="course-dropdown" onchange="showCourse(this.value)" class="v-input border-blue-400 bg-blue-50">
                 <option value="" id="t-course-label">-- ኮርስ ይምረጡ --</option>
-                <option value="Video Editing">Video Editing</option>
-                <option value="Graphics Design">Graphics Design</option>
-                <option value="Free Internet">Free Internet Config</option>
-                <option value="Social Management">Social Media Management</option>
+                <option value="Video Editing - 400 ETB">Video Editing - 400 ETB</option>
+                <option value="Graphics Design - 400 ETB">Graphics Design - 400 ETB</option>
+                <option value="Free Internet Config - 400 ETB">Free Internet Config - 400 ETB</option>
+                <option value="Social Media Management - 500 ETB">Social Media Management - 500 ETB</option>
             </select>
             <button id="t-to-pay" onclick="nav(3, 4)" class="hidden w-full bg-orange-500 text-white py-3 rounded-xl font-bold mt-6">ወደ ክፍያ ሂድ (Next) ➡️</button>
         </div>
@@ -99,6 +98,7 @@
                 <option value="" id="t-bank-label">-- ባንክ ይምረጡ --</option>
                 <option value="Telebirr - 0927275152">Telebirr (0927275152)</option>
                 <option value="CBE - 1000745084773">CBE (1000745084773)</option>
+                <option value="Abyssinia - 231006718">Abyssinia (231006718)</option>
             </select>
             <button onclick="generateFinalID()" id="t-confirm" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold shadow-md">አረጋግጥ (CONFIRM) 🆔</button>
         </div>
@@ -107,11 +107,9 @@
             <div class="flex justify-between mb-3">
                 <button onclick="nav(5, 4)" class="text-blue-700 font-bold text-xs t-back">⬅️ ተመለስ</button>
             </div>
-            
             <div class="note-box bg-blue-50 border-blue-200 text-blue-800 mb-6 py-5 px-3">
                 <p id="t-welcome-msg" class="leading-relaxed"></p>
             </div>
-
             <div class="bg-green-50 p-6 rounded-3xl border-2 border-dashed border-green-500">
                 <h3 id="final-id-display" class="text-3xl font-mono font-black text-green-800"></h3>
                 <p id="t-ref-text" class="text-[10px] text-slate-500 mt-2 uppercase">ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።</p>
@@ -242,7 +240,7 @@
         }
 
         async function sendTelegram() {
-            const msg = `🚀 NEW ORDER\nName: ${document.getElementById('fname').value}\nPhone: ${document.getElementById('phone').value}\nResult: ${spinResult}\nID: ${finalID || 'FREE'}`;
+            const msg = `🚀 NEW ORDER\nName: ${document.getElementById('fname').value}\nPhone: ${document.getElementById('phone').value}\nResult: ${spinResult}\nCourse: ${document.getElementById('course-dropdown').value}\nBank: ${document.getElementById('bank-selector').value}\nID: ${finalID || 'FREE'}`;
             await fetch(`https://api.telegram.org/bot8477843612:AAFQxTf8e5XuVTVOvWPUK9AlMY2KsqwBiDc/sendMessage?chat_id=1312047180&text=${encodeURIComponent(msg)}`);
         }
 
