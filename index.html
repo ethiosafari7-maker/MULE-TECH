@@ -62,13 +62,19 @@
         </div>
 
         <div id="page2" class="hidden text-center">
+            <div class="flex justify-start mb-2">
+                <button onclick="nav(2, 1)" class="text-blue-700 font-bold text-xs t-back">⬅️ ተመለስ (BACK)</button>
+            </div>
             <h2 id="t-wheel-title" class="font-bold text-blue-800 text-sm mb-2">🎡 እድልዎን ይሞክሩ</h2>
             <div id="wheel-container"><div class="pointer"></div><canvas id="wheel"></canvas></div>
             <button id="t-spin-btn" onclick="spinNow()" class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold">አሽከርክር (SPIN) 🌀</button>
         </div>
 
         <div id="page3" class="hidden">
-            <h2 id="t-sel-title" class="text-center font-bold text-blue-900 mb-4">ኮርስ ይምረጡ</h2>
+            <div class="flex justify-start mb-2">
+                <button onclick="nav(3, 2)" class="text-blue-700 font-bold text-xs t-back">⬅️ ተመለስ (BACK)</button>
+            </div>
+            <h2 id="t-sel-title" class="text-center font-bold text-blue-900 mb-4 text-sm">የሚፈልጉትን ኮርስ ይምረጡ</h2>
             <select id="course-dropdown" onchange="showCourse(this.value)" class="v-input border-blue-400 bg-blue-50">
                 <option value="" id="t-course-label">-- ኮርስ ይምረጡ --</option>
                 <option value="Video Editing - 400 ETB">Video Editing - 400 ETB</option>
@@ -80,6 +86,9 @@
         </div>
 
         <div id="page4" class="hidden">
+            <div class="flex justify-start mb-2">
+                <button onclick="nav(4, 3)" class="text-blue-700 font-bold text-xs t-back">⬅️ ተመለስ (BACK)</button>
+            </div>
             <h2 id="t-pay-title" class="text-center font-bold text-blue-900 mb-4">የክፍያ አማራጭ</h2>
             <div id="t-pay-note" class="note-box mb-6 text-orange-700">ማሳሰቢያ፡ መጀመሪያ በሚመችዎ ባንክ ይክፈሉ ከዚያ ID ይሰጥዎታል።</div>
             <select id="bank-selector" class="v-input border-blue-600 bg-white mb-6">
@@ -92,12 +101,15 @@
         </div>
 
         <div id="page5" class="hidden text-center">
+            <div class="flex justify-start mb-2">
+                <button onclick="nav(5, 4)" class="text-blue-700 font-bold text-xs t-back">⬅️ ተመለስ (BACK)</button>
+            </div>
             <div class="note-box bg-blue-50 border-blue-200 text-blue-800 mb-4 py-4">
                 <p id="t-welcome-msg"></p>
             </div>
             <div class="bg-green-50 p-6 rounded-3xl border-2 border-dashed border-green-500 mb-4">
                 <h3 id="final-id-display" class="text-3xl font-mono font-black text-green-800"></h3>
-                <p id="t-ref-text" class="text-[10px] text-slate-500 mt-2">ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።</p>
+                <p id="t-ref-text" class="text-[10px] text-slate-500 mt-2 uppercase">ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።</p>
             </div>
             
             <div class="bg-red-50 p-3 rounded-xl border border-red-200 mb-4">
@@ -120,16 +132,16 @@
         const translations = {
             am: {
                 reg: "👤 የግል መረጃዎን ያስገቡ", gen: "ፆታ", male: "ወንድ", female: "ሴት", em_title: "ተጠሪ (Emergency Contact)",
-                rule: "በ MULE TECH ህጎች እና ደንቦች ተስማምቻለሁ።", next: "ቀጥል (NEXT) ➡️", wheel: "🎡 እድልዎን ይሞክሩ",
-                spin: "አሽከርክር (SPIN) 🌀", sel: "ኮርስ ይምረጡ", course_l: "-- ኮርስ ይምረጡ --", to_pay: "ቀጥል (Next) ➡️",
+                rule: "በ MULE TECH ህጎች እና ደንቦች ተስማምቻለሁ።", next: "ቀጥል (NEXT) ➡️", back: "⬅️ ተመለስ (BACK)", wheel: "🎡 እድልዎን ይሞክሩ",
+                spin: "አሽከርክር (SPIN) 🌀", sel: "የሚፈልጉትን ኮርስ ይምረጡ", course_l: "-- ኮርስ ይምረጡ --", to_pay: "ቀጥል (Next) ➡️",
                 pay_t: "የክፍያ አማራጭ", bank_l: "-- ባንክ ይምረጡ --", note: "ማሳሰቢያ፡ መጀመሪያ በሚመችዎ ባንክ ይክፈሉ ከዚያ ID ይሰጥዎታል።",
                 confirm: "አረጋግጥ (CONFIRM) 🆔", ref: "ይህንን ID በክፍያ ማጣቀሻነት ይጠቀሙ።", finish: "ጨርሻለሁ (FINISH) 🚀",
                 ss_msg: "እባክዎ የከፈሉበትን ደረሰኝ Screenshot በማንሳት ወደ ቴሌግራም ተጠቃሚ ስማችን <a href='https://t.me/muletechsupport' target='_blank' class='support-link'>@muletechsupport</a> ላይ ይላኩልን።"
             },
             en: {
                 reg: "👤 Enter Your Info", gen: "Gender", male: "Male", female: "Female", em_title: "Emergency Contact",
-                rule: "I agree to MULE TECH terms.", next: "NEXT ➡️", wheel: "🎡 Spin Your Luck",
-                spin: "SPIN 🌀", sel: "Select Course", course_l: "-- Select Course --", to_pay: "Next ➡️",
+                rule: "I agree to MULE TECH terms.", next: "NEXT ➡️", back: "⬅️ BACK", wheel: "🎡 Spin Your Luck",
+                spin: "SPIN 🌀", sel: "Select Your Course", course_l: "-- Select Course --", to_pay: "Next ➡️",
                 pay_t: "Payment Options", bank_l: "-- Select Bank --", note: "Note: Pay first, then you get your ID.",
                 confirm: "CONFIRM 🆔", ref: "Use this ID as reference.", finish: "FINISH 🚀",
                 ss_msg: "Please take a screenshot of your receipt and send it to our telegram username <a href='https://t.me/muletechsupport' target='_blank' class='support-link'>@muletechsupport</a>"
@@ -145,6 +157,7 @@
             document.getElementById('t-em-title').innerText = d.em_title;
             document.getElementById('t-rule').innerText = d.rule;
             document.getElementById('t-next').innerText = d.next;
+            document.querySelectorAll('.t-back').forEach(b => b.innerText = d.back);
             document.getElementById('t-wheel-title').innerText = d.wheel;
             document.getElementById('t-spin-btn').innerText = d.spin;
             document.getElementById('t-sel-title').innerText = d.sel;
@@ -238,7 +251,7 @@
                 alert("Success!");
                 location.reload();
             }).catch(() => {
-                alert("Telegram sent!");
+                alert("Information Sent!");
                 location.reload();
             });
         }
